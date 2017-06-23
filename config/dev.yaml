@@ -1,0 +1,33 @@
+source: source/index.js
+dist: test/feedback.js
+
+bfPlugins:
+  - name: watchify
+  - name: errorify
+
+bfTransforms:
+  - name: eslintify
+    options:
+      passthrough: [ 'errors', 'warnings' ]
+  - name: scssify
+    options:
+      autoInject:
+        prepend: true
+        verbose: true
+      sass:
+        sourceMapEmbed: false
+        includePaths: ['node_modules']
+      postcss:
+        autoprefixer:
+          browsers: ['last 2 versions', '> 1%', 'IE >= 11']
+  - name: jstify
+    options:
+      engine: global
+  - name: nocommentify
+
+proxy:
+  https: false
+  serveStatic: ['.']
+  rewriteRules:
+    - match: !!js/regexp /https://assets3.insales.ru/assets/\d{1,}/\d{1,}/\d{1,}/v_\d{1,}/build/feedback.js/
+      replace: /test/feedback.js

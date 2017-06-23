@@ -1,0 +1,199 @@
+#env config
+env:
+  commonjs: true
+  browser: true
+  node: true
+
+rules:
+  # base errors
+  no-cond-assign: error
+  no-console:
+    - warn
+    - allow: [warn, error]
+  no-dupe-args: error
+  no-dupe-keys: error
+  no-duplicate-case: error
+  no-empty: warn
+  no-extra-boolean-cast: warn
+  no-extra-semi: warn
+  no-func-assign: error
+  no-inner-declarations: warn
+  no-unexpected-multiline: error
+  no-unreachable: error
+  no-unsafe-negation: error
+  valid-typeof: error
+  no-sparse-arrays: error
+  valid-jsdoc: warn
+  require-jsdoc:
+    - warn
+    - require:
+        FunctionDeclaration: true
+        MethodDefinition: false
+        ClassDeclaration: false
+        ArrowFunctionExpression: false
+
+  # code style
+  block-scoped-var: warn
+  curly: warn
+  dot-location:
+    - warn
+    - property
+  dot-notation: warn
+  no-alert: warn
+  no-case-declarations: warn
+  no-else-return: warn
+  no-empty-function: warn
+  no-eval: warn
+  no-extend-native: warn
+  no-floating-decimal: warn
+  no-loop-func: warn
+  no-magic-numbers: warn
+  no-multi-spaces: warn
+  no-multi-str: warn
+  no-new-func: warn
+  no-new: warn
+  no-param-reassign: warn
+  no-proto: warn
+  no-redeclare: warn
+  no-return-assign: warn
+  no-script-url: warn
+  no-self-compare: warn
+  no-sequences: warn
+  no-unmodified-loop-condition: warn
+  no-unused-expressions: warn
+  no-useless-escape: warn
+  no-warning-comments: warn
+  vars-on-top: warn
+  wrap-iife:
+    - warn
+    - inside
+  yoda:
+    - warn
+    - never
+
+  init-declarations: warn
+  no-shadow-restricted-names: warn
+  no-shadow: warn
+  no-undef: warn
+  no-undefined: warn
+  no-unused-vars: warn
+  no-use-before-define: warn
+
+  array-bracket-spacing:
+    - warn
+    - always
+    - singleValue: true
+      objectsInArrays: false
+      arraysInArrays: false
+  block-spacing:
+    - warn
+    - always
+  brace-style:
+    - warn
+    - stroustrup
+    - allowSingleLine: false
+  camelcase: off
+  comma-dangle:
+    - warn
+    - only-multiline
+  comma-spacing: warn
+  comma-style: warn
+  consistent-this:
+    - warn
+    - self
+  eol-last: warn
+  func-call-spacing:
+    - warn
+    - never
+  func-names:
+    - off
+    - always
+  id-blacklist:
+    - warn
+    - data
+    - error
+  id-length:
+    - warn
+    - min: 3
+      max: 20
+  indent:
+    - warn
+    - 2
+    - SwitchCase: 1
+  key-spacing: warn
+  keyword-spacing: warn
+  line-comment-position:
+    - warn
+    - position: above
+  max-depth:
+    - warn
+    - max: 4
+  max-len:
+    - warn
+    - ignoreComments: true
+      ignoreRegExpLiterals: true
+  max-lines:
+    - warn
+    - max: 300
+      skipBlankLines: true
+      skipComments: true
+  max-nested-callbacks:
+    - warn
+    - max: 4
+  max-params:
+    - warn
+    - max: 4
+  max-statements-per-line:
+    - warn
+    - max: 1
+  new-cap: warn
+  new-parens: warn
+  newline-after-var:
+    - warn
+    - always
+  newline-before-return: warn
+  newline-per-chained-call: warn
+  no-continue: warn
+  no-inline-comments: warn
+  no-lonely-if: warn
+  no-mixed-spaces-and-tabs: warn
+  no-multiple-empty-lines:
+    - warn
+    - max: 1
+  no-nested-ternary: warn
+  no-unneeded-ternary: warn
+  no-whitespace-before-property: warn
+  object-curly-newline:
+    - warn
+    - multiline: true
+  object-curly-spacing:
+    - warn
+    - always
+  object-property-newline: warn
+  one-var-declaration-per-line:
+    - warn
+    - always
+  one-var:
+    - warn
+    - never
+  padded-blocks:
+    - warn
+    - never
+
+  quote-props:
+    - warn
+    - as-needed
+    - keywords: true
+  quotes:
+    - warn
+    - single
+    - avoidEscape: true
+  semi: warn
+  space-before-blocks: warn
+  space-before-function-paren: warn
+  space-in-parens:
+    - warn
+    - never
+  space-infix-ops: warn
+  space-unary-ops: warn
+  wrap-regex: warn

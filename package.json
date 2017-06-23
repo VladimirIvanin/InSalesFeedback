@@ -1,0 +1,26 @@
+{
+  "name": "feedback",
+  "version": "0.0.1",
+  "description": "feedback submit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node node_modules/isoptera -c config/dev.yaml",
+    "dist": "node node_modules/isoptera -c config/dist.yaml"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^7.1.1",
+    "errorify": "^0.3.1",
+    "eslintify": "^3.1.0",
+    "isoptera": "0.0.3",
+    "jstify": "^0.14.0",
+    "lodash": "^4.17.4",
+    "nocommentify": "0.0.4",
+    "partialify": "^3.1.6",
+    "postcss": "^6.0.1",
+    "scssify": "^2.2.1",
+    "watchify": "^3.9.0"
+  }
+}

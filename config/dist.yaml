@@ -1,0 +1,25 @@
+source: source/index.js
+dist: dist/feedback.js
+
+bfPlugins:
+  - name: errorify
+
+bfTransforms:
+  - name: eslintify
+    options:
+      passthrough: [ 'errors', 'warnings' ]
+  - name: scssify
+    options:
+      autoInject:
+        prepend: true
+        verbose: false
+      sass:
+        sourceMapEmbed: false
+        includePaths: ['node_modules']
+      postcss:
+        autoprefixer:
+          browsers: ['last 2 versions', '> 1%', 'IE >= 11']
+  - name: jstify
+    options:
+      engine: global
+  - name: nocommentify
