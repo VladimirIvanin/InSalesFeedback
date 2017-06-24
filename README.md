@@ -1,5 +1,13 @@
 # Плагин для отправки сообщений на платформе InSales
 
+## CDN
+
+```html
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.1.0/dist/feedback.js"></script>
+```
+
+## Пример
+
 ```js
 $(document).ready(function() {
   $('#feedback-form').InSalesFeedback({
