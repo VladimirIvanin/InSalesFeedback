@@ -89,8 +89,10 @@ function validatePhone(phone, isRequire, phoneNumberLength) {
   var result = {
     isError: false,
     errorMessage: 'Укажите номер в правильном формате!',
-    value: phone
+    value: decodeURIComponent(phone)
   };
+
+  phone = decodeURIComponent(phone)
 
   if (!isRequire && phone && phone == '' || !isRequire && !phone) {
     result.value = system.dataDefault.phone;
@@ -102,6 +104,7 @@ function validatePhone(phone, isRequire, phoneNumberLength) {
     }else{
       // Если не совпадает формат (кол-во цифр)
       var numLen = getPhoneNumberLength(phone);
+
       if (phoneNumberLength != numLen) {
         result.isError = true;
       }

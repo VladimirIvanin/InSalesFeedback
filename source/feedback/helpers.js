@@ -27,9 +27,9 @@ function parseSerialize(string) {
           if (!_data[ VResult[0] ][VResult[1]]) {
             _data[ VResult[0] ][VResult[1]] = [];
           }
-          _data[ VResult[0] ][VResult[1]].push(part[ 1 ]);
+          _data[ VResult[0] ][VResult[1]].push(decodeURIComponent(part[ 1 ]));
         }else{
-          _data[ part[ 0 ] ] = part[ 1 ];
+          _data[ part[ 0 ] ] = decodeURIComponent(part[ 1 ]);
         }
       }
 
@@ -50,11 +50,18 @@ function testRequire(name, _require) {
 }
 
 function getPhoneNumberLength(phone) {
+  if (!phone) {
+    phone = '';
+  }else{
+    phone = decodeURIComponent(phone);
+  }
+
   var VRegExp = new RegExp(/[\d]/g);
   var VResult = phone.match(VRegExp);
   if (!VResult) {
     VResult = [];
   }
+
   return VResult.length;
 }
 

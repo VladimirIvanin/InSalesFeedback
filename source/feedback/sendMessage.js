@@ -1,6 +1,8 @@
 var parseSerialize = require('./helpers').parseSerialize;
+var getPageLink = require('./helpers').getPageLink;
 
 function sendMessage(dataForm) {
+  var self = this;
   var result = $.Deferred();
   var search = parseSerialize(window.location.search);
   var _lang = search.lang || '';
@@ -8,6 +10,10 @@ function sendMessage(dataForm) {
     lang: _lang,
     feedback: dataForm,
   };
+
+  if (self.options.urlPageOnContent) {
+    _message.feedback.content = updateContentFooter(_message.feedback.content);
+  }
 
   $.post('/client_account/feedback.json', _message)
     .done(function (response) {
@@ -21,6 +27,11 @@ function sendMessage(dataForm) {
     });
 
   return result.promise();
+}
+
+function updateContentFooter(content) {
+  var pageLink = '<br /> Отправлено со страницы: ' +  getPageLink();
+  return content + pageLink;
 }
 
 module.exports = sendMessage;
