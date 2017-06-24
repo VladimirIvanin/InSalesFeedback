@@ -41,10 +41,20 @@ function binding() {
         });
       })
       .fail(function (onErrorData) {
+        self.errorRender(onErrorData);
         self.eventMachine('error', $form, onErrorData);
       });
 
     }
+  });
+
+  $(document).on(system.events.success, function(event) {
+    if (self.options.resetFormOnSubmit) {
+      if ($form.get(0)) {
+        $form.get(0).reset();
+      }
+    }
+    self.successRender();
   });
 }
 

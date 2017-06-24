@@ -2,6 +2,8 @@ var defaults = require('../variables').defaults;
 var binding = require('./binding');
 var eventMachine = require('./eventMachine');
 var sendMessage = require('./sendMessage');
+var errorRender = require('./render').errorRender;
+var successRender = require('./render').successRender;
 var checkDuplicateId = require('./validate').checkDuplicateId;
 var validateFormData = require('./validate').validateFormData;
 
@@ -16,6 +18,8 @@ var Feedback = function ($elem, options) {
   self.sendMessage = sendMessage;
   self.eventMachine = eventMachine;
   self.validateFormData = validateFormData;
+  self.errorRender = errorRender;
+  self.successRender = successRender;
 
   self.initFeedback();
 

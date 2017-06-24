@@ -52,12 +52,22 @@ function testRequire(name, _require) {
 function getPhoneNumberLength(phone) {
   var VRegExp = new RegExp(/[\d]/g);
   var VResult = phone.match(VRegExp);
+  if (!VResult) {
+    VResult = [];
+  }
   return VResult.length;
+}
+
+function getDataAttrName(name, value) {
+  const resultName = (value) ? name + '="'+value+'"' : name;
+
+  return '[' + resultName + ']';
 }
 
 module.exports = {
   'parseSerialize': parseSerialize,
   'testRequire': testRequire,
   'getPhoneNumberLength': getPhoneNumberLength,
+  'getDataAttrName': getDataAttrName,
   'getPageLink': getPageLink
 }

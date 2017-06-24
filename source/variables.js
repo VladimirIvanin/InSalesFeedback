@@ -8,10 +8,16 @@ var defaults = {
   onFail: function(){}, // Ошибка при отправке сообщения
   onError: function(){}, // Ошибка валидации
   customValidate: null, // Своя валидация. Должна возвращать true/false. customValidate($form, dataForm). Синхронная функция
+  classes: {
+    errorInput: 'is-error-feedback-input',
+    errorField: 'is-error-feedback-field',
+    errorForm: 'is-error-feedback',
+    failForm: 'is-fail-feedback'
+  },
   messages: {
     success: 'Сообщение успешно отправлено!',
     fail: 'Сообщение не отправлено, попробуйте ещё раз!',
-    error: 'Не заполнены обязательные поля!'
+    error: 'Неверно заполнены поля!'
   },
   selectors: {
     submit: 'data-feedback-submit', // кнопка отправить
