@@ -66,7 +66,7 @@ function getPhoneNumberLength(phone) {
 }
 
 function getDataAttrName(name, value) {
-  const resultName = (value) ? name + '="'+value+'"' : name;
+  var resultName = (value) ? name + '="'+value+'"' : name;
 
   return '[' + resultName + ']';
 }

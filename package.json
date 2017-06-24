@@ -1,8 +1,8 @@
 {
   "name": "InSalesFeedback",
-  "version": "0.0.1",
-  "description": "Feedback submit util",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "Плагин для отправки сообщений на платформе InSales",
+  "main": "dist/feedback.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node node_modules/isoptera -c config/dev.yaml",
