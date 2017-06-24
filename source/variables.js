@@ -1,6 +1,25 @@
 var defaults = {
+  hideErrorOnFocus: true, // скрыть ошибку при вводе в инпут
+  resetFormOnSubmit: true, // очистить форму после отправки
+  useDefaultContent: true, // сколько цифр нужно в номере телефона
+  phoneNumberLength: 11, // сколько цифр нужно в номере телефона
+  require: [], // обязательные поля. ['phone', 'name']
+  onSuccess: function(){}, // сообщение успешно отправлено
+  onFail: function(){}, // Ошибка при отправке сообщения
+  onError: function(){}, // Ошибка валидации
+  customValidate: null, // Своя валидация. Должна возвращать true/false. customValidate($form, dataForm). Синхронная функция
+  messages: {
+    success: 'Сообщение успешно отправлено!',
+    fail: 'Сообщение не отправлено, попробуйте ещё раз!',
+    error: 'Не заполнены обязательные поля!'
+  },
   selectors: {
-    submit: 'data-feedback-submit'
+    submit: 'data-feedback-submit', // кнопка отправить
+    field: 'data-feedback-field', // обертка инпута и лейбла
+    input: 'data-feedback-input', // инпут с данными
+    inputError: 'data-feedback-input-error', // ошибка инпута
+    success: 'data-feedback-success', // поле для уведомления
+    error: 'data-feedback-error' // поле для вывода ошибки (общее)
   }
 }
 
@@ -8,14 +27,28 @@ var system = {
   NAME: 'InSalesFeedback',
   VERSION: '0.0.1',
   NAMESPACE: '.InSalesFeedback',
-  ajax: {
-    url: '/client_account/feedback.json',
-    type: 'POST',
-    dataType: 'json'
+  names: {
+    from: 'from', // адрес отправителя
+    name: 'name', // имя отправителя
+    phone: 'phone', // телефон отправителя
+    subject: 'subject', // тема сообщения
+    content: 'content' // тело сообщения (обязательное)
+  },
+  dataDefault: {
+    from: 'shop@myinsales.ru', // адрес отправителя
+    name: 'не заполнено', // Имя отправителя
+    phone: 'не заполнено', // телефон отправителя
+    subject: 'Заказ обратного звонка.', // тема сообщения
+    content: 'Заказ обратного звонка.' // тело сообщения (обязательное)
+  },
+  events: {
+    success: 'success::feedback', // сообщение успешно отправлено
+    fail: 'fail::feedback', // Ошибка при отправке сообщения
+    error: 'error::feedback' // Ошибка валидации
   }
 }
 
 module.exports = {
-  defaults,
-  system
+  'defaults': defaults,
+  'system': system
 }
