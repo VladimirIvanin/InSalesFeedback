@@ -272,7 +272,7 @@ function successRender() {
   renderWithOptions($inputErrorSelector, '', '', false, useJqueryToggle);
 
   var $success = $form.find(successSelector);
-  renderWithOptions($success, $success, '', true, useJqueryToggle, hideSuccessMessageTimer);
+  renderWithOptions($success, self.options.messages.success, '', true, useJqueryToggle, hideSuccessMessageTimer);
 }
 
 function renderWithOptions($selector, message, activeClass, isActive, useJqueryToggle, hideSuccessMessageTimer) {
@@ -578,7 +578,7 @@ var system = require('variables').system;
 var defaults = {
   urlPageOnContent: true, 
   useJqueryToggle: true, 
-  hideSuccessMessageTimer: 3000, 
+  hideSuccessMessageTimer: 5000, 
   hideErrorOnFocus: true, 
   resetFormOnSubmit: true, 
   useDefaultContent: true, 

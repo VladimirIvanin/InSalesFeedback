@@ -1,7 +1,7 @@
 var defaults = {
   urlPageOnContent: true, // Добавлять в сообщение ссылку на страницу?
   useJqueryToggle: true, // Использовать переключения show/hide для уведомлений
-  hideSuccessMessageTimer: 3000, // через сколько скрыть сообщение
+  hideSuccessMessageTimer: 5000, // через сколько скрыть сообщение
   hideErrorOnFocus: true, // скрыть ошибку при вводе в инпут
   resetFormOnSubmit: true, // очистить форму после отправки
   useDefaultContent: true, // сколько цифр нужно в номере телефона
