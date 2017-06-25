@@ -19,6 +19,13 @@ var defaults = {
     errorForm: 'is-error-feedback',
     failForm: 'is-fail-feedback'
   },
+  errorMessages: {
+    from: 'Не заполнено поле e-mail',
+    phone: 'Укажите номер в правильном формате!',
+    name: 'Не заполнено поле имя',
+    subject: 'Не заполнено поле тема сообщения',
+    content: 'Не заполнено поле текст сообщения'
+  },
   messages: {
     success: 'Сообщение успешно отправлено!',
     fail: 'Сообщение не отправлено, попробуйте ещё раз!',
@@ -39,7 +46,7 @@ var defaults = {
 
 var system = {
   NAME: 'InSalesFeedback',
-  VERSION: '0.8.0',
+  VERSION: '0.9.0',
   NAMESPACE: '.InSalesFeedback',
   names: {
     from: 'from', // адрес отправителя

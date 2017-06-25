@@ -27,7 +27,7 @@ function validateFormData(dataForm) {
 
   // from (e-mail)
   var isFromRequire = testRequire('from', _require);
-  var validateFromResult = validateFrom(updateFormData.from, isFromRequire);
+  var validateFromResult = validateFrom(updateFormData.from, isFromRequire, self.options.errorMessages.from);
   updateFormData.from = validateFromResult.value;
   if (validateFromResult.isError) {
     errors.push({
@@ -38,7 +38,7 @@ function validateFormData(dataForm) {
 
   // phone
   var isPhoneRequire = testRequire('phone', _require);
-  var validatePhoneResult = validatePhone(updateFormData.phone, isPhoneRequire, self.options.phoneNumberLength);
+  var validatePhoneResult = validatePhone(updateFormData.phone, isPhoneRequire, self.options.phoneNumberLength, self.options.errorMessages.phone);
   updateFormData.phone = validatePhoneResult.value;
   if (validatePhoneResult.isError) {
     errors.push({
@@ -49,7 +49,7 @@ function validateFormData(dataForm) {
 
   // name
   var isNameRequire = testRequire('name', _require);
-  var validateNameResult = validateName(updateFormData.name, isNameRequire);
+  var validateNameResult = validateName(updateFormData.name, isNameRequire, self.options.errorMessages.name);
   updateFormData.name = validateNameResult.value;
   if (validateNameResult.isError) {
     errors.push({
@@ -60,7 +60,7 @@ function validateFormData(dataForm) {
 
   // subject
   var isSubjectRequire = testRequire('subject', _require);
-  var validateSubjectResult = validateSubject(updateFormData.subject, isSubjectRequire);
+  var validateSubjectResult = validateSubject(updateFormData.subject, isSubjectRequire, self.options.errorMessages.subject);
   updateFormData.subject = validateSubjectResult.value;
   if (validateSubjectResult.isError) {
     errors.push({
@@ -72,7 +72,7 @@ function validateFormData(dataForm) {
   // content
   if (!self.options.useDefaultContent && !updateFormData.content) {
 
-    var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent);
+    var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent, self.options.errorMessages.content);
     updateFormData.content = validateContentResult.value;
 
     if (validateContentResult.isError) {
@@ -116,10 +116,10 @@ function validateFormData(dataForm) {
 }
 
 // Валидация поля phone
-function validatePhone(phone, isRequire, phoneNumberLength) {
+function validatePhone(phone, isRequire, phoneNumberLength, errorMessage) {
   var result = {
     isError: false,
-    errorMessage: 'Укажите номер в правильном формате!',
+    errorMessage: errorMessage,
     value: decodeURIComponent(phone)
   };
 
@@ -146,10 +146,10 @@ function validatePhone(phone, isRequire, phoneNumberLength) {
 }
 
 // Валидация поля from
-function validateFrom(from, isRequire) {
+function validateFrom(from, isRequire, errorMessage) {
   var result = {
     isError: false,
-    errorMessage: 'Не заполнено поле e-mail',
+    errorMessage: errorMessage,
     value: from
   };
 
@@ -170,10 +170,10 @@ function validateFrom(from, isRequire) {
 }
 
 // Валидация поля name
-function validateName(name, isRequire) {
+function validateName(name, isRequire, errorMessage) {
   var result = {
     isError: false,
-    errorMessage: 'Не заполнено поле имя',
+    errorMessage: errorMessage,
     value: name
   };
 
@@ -190,10 +190,10 @@ function validateName(name, isRequire) {
 }
 
 // Валидация поля subject
-function validateSubject(subject, isRequire) {
+function validateSubject(subject, isRequire, errorMessage) {
   var result = {
     isError: false,
-    errorMessage: 'Не заполнено поле тема сообщения',
+    errorMessage: errorMessage,
     value: subject
   };
 
@@ -210,10 +210,10 @@ function validateSubject(subject, isRequire) {
 }
 
 // Валидация поля content
-function validateContent(content, isRequire) {
+function validateContent(content, isRequire, errorMessage) {
   var result = {
     isError: false,
-    errorMessage: 'Не заполнено поле текст сообщения',
+    errorMessage: errorMessage,
     value: content
   };
   if (!content) {

@@ -520,7 +520,7 @@ function validateFormData(dataForm) {
   var updateFormData = dataForm;
 
   var isFromRequire = testRequire('from', _require);
-  var validateFromResult = validateFrom(updateFormData.from, isFromRequire);
+  var validateFromResult = validateFrom(updateFormData.from, isFromRequire, self.options.errorMessages.from);
   updateFormData.from = validateFromResult.value;
   if (validateFromResult.isError) {
     errors.push({
@@ -530,7 +530,7 @@ function validateFormData(dataForm) {
   };
 
   var isPhoneRequire = testRequire('phone', _require);
-  var validatePhoneResult = validatePhone(updateFormData.phone, isPhoneRequire, self.options.phoneNumberLength);
+  var validatePhoneResult = validatePhone(updateFormData.phone, isPhoneRequire, self.options.phoneNumberLength, self.options.errorMessages.phone);
   updateFormData.phone = validatePhoneResult.value;
   if (validatePhoneResult.isError) {
     errors.push({
@@ -540,7 +540,7 @@ function validateFormData(dataForm) {
   };
 
   var isNameRequire = testRequire('name', _require);
-  var validateNameResult = validateName(updateFormData.name, isNameRequire);
+  var validateNameResult = validateName(updateFormData.name, isNameRequire, self.options.errorMessages.name);
   updateFormData.name = validateNameResult.value;
   if (validateNameResult.isError) {
     errors.push({
@@ -550,7 +550,7 @@ function validateFormData(dataForm) {
   };
 
   var isSubjectRequire = testRequire('subject', _require);
-  var validateSubjectResult = validateSubject(updateFormData.subject, isSubjectRequire);
+  var validateSubjectResult = validateSubject(updateFormData.subject, isSubjectRequire, self.options.errorMessages.subject);
   updateFormData.subject = validateSubjectResult.value;
   if (validateSubjectResult.isError) {
     errors.push({
@@ -561,7 +561,7 @@ function validateFormData(dataForm) {
 
   if (!self.options.useDefaultContent && !updateFormData.content) {
 
-    var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent);
+    var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent, self.options.errorMessages.content);
     updateFormData.content = validateContentResult.value;
 
     if (validateContentResult.isError) {
@@ -604,10 +604,10 @@ function validateFormData(dataForm) {
   return result.promise();
 }
 
-function validatePhone(phone, isRequire, phoneNumberLength) {
+function validatePhone(phone, isRequire, phoneNumberLength, errorMessage) {
   var result = {
     isError: false,
-    errorMessage: 'Укажите номер в правильном формате!',
+    errorMessage: errorMessage,
     value: decodeURIComponent(phone)
   };
 
@@ -631,10 +631,10 @@ function validatePhone(phone, isRequire, phoneNumberLength) {
   return result;
 }
 
-function validateFrom(from, isRequire) {
+function validateFrom(from, isRequire, errorMessage) {
   var result = {
     isError: false,
-    errorMessage: 'Не заполнено поле e-mail',
+    errorMessage: errorMessage,
     value: from
   };
 
@@ -654,10 +654,10 @@ function validateFrom(from, isRequire) {
   return result;
 }
 
-function validateName(name, isRequire) {
+function validateName(name, isRequire, errorMessage) {
   var result = {
     isError: false,
-    errorMessage: 'Не заполнено поле имя',
+    errorMessage: errorMessage,
     value: name
   };
 
@@ -673,10 +673,10 @@ function validateName(name, isRequire) {
   return result;
 }
 
-function validateSubject(subject, isRequire) {
+function validateSubject(subject, isRequire, errorMessage) {
   var result = {
     isError: false,
-    errorMessage: 'Не заполнено поле тема сообщения',
+    errorMessage: errorMessage,
     value: subject
   };
 
@@ -692,10 +692,10 @@ function validateSubject(subject, isRequire) {
   return result;
 }
 
-function validateContent(content, isRequire) {
+function validateContent(content, isRequire, errorMessage) {
   var result = {
     isError: false,
-    errorMessage: 'Не заполнено поле текст сообщения',
+    errorMessage: errorMessage,
     value: content
   };
   if (!content) {
@@ -784,6 +784,13 @@ var defaults = {
     errorForm: 'is-error-feedback',
     failForm: 'is-fail-feedback'
   },
+  errorMessages: {
+    from: 'Не заполнено поле e-mail',
+    phone: 'Укажите номер в правильном формате!',
+    name: 'Не заполнено поле имя',
+    subject: 'Не заполнено поле тема сообщения',
+    content: 'Не заполнено поле текст сообщения'
+  },
   messages: {
     success: 'Сообщение успешно отправлено!',
     fail: 'Сообщение не отправлено, попробуйте ещё раз!',
@@ -804,7 +811,7 @@ var defaults = {
 
 var system = {
   NAME: 'InSalesFeedback',
-  VERSION: '0.8.0',
+  VERSION: '0.9.0',
   NAMESPACE: '.InSalesFeedback',
   names: {
     from: 'from', 
