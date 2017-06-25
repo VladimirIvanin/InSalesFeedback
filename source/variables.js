@@ -6,7 +6,7 @@ var defaults = {
   hideSuccessMessageTimer: 5000, // через сколько скрыть сообщение
   hideErrorOnFocus: true, // скрыть ошибку при вводе в инпут
   resetFormOnSubmit: true, // очистить форму после отправки
-  useDefaultContent: true, // сколько цифр нужно в номере телефона
+  useDefaultContent: true, // если поля контент нет, то заполниться значение по умолчанию или из доп параметров и кастомных настроек
   phoneNumberLength: 11, // сколько цифр нужно в номере телефона
   require: [], // обязательные поля. ['phone', 'name']
   onSuccess: function(){}, // сообщение успешно отправлено
@@ -25,13 +25,14 @@ var defaults = {
     error: 'Неверно заполнены поля!'
   },
   selectors: {
-    html: 'data-feedback-html', // кнопка отправить (не используется)
+    html: 'data-feedback-html', // контент из html
     submit: 'data-feedback-submit', // кнопка отправить (не используется)
     field: 'data-feedback-field', // обертка инпута и лейбла
     input: 'data-feedback-input', // инпут с данными
     inputError: 'data-feedback-input-error', // ошибка инпута
     success: 'data-feedback-success', // поле для уведомления
-    error: 'data-feedback-error' // поле для вывода ошибки (общее)
+    error: 'data-feedback-error', // поле для вывода ошибки (общее)
+    errors: 'data-feedback-errors' // поле для вывода ошибок (общее)
   }
 }
 

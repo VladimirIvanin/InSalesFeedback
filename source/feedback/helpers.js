@@ -27,9 +27,17 @@ function parseSerialize(string) {
           if (!_data[ VResult[0] ][VResult[1]]) {
             _data[ VResult[0] ][VResult[1]] = [];
           }
-          _data[ VResult[0] ][VResult[1]].push(decodeURIComponent(part[ 1 ]));
+          var _part = decodeURIComponent(part[ 1 ]);
+          if (_part === 'undefined') {
+            _part = '';
+          }
+          _data[ VResult[0] ][VResult[1]].push(_part);
         }else{
-          _data[ part[ 0 ] ] = decodeURIComponent(part[ 1 ]);
+          var _part = decodeURIComponent(part[ 1 ]);
+          if (_part === 'undefined') {
+            _part = '';
+          }
+          _data[ part[ 0 ] ] = _part;
         }
       }
 

@@ -5,7 +5,7 @@ var getPageLink = require('./helpers').getPageLink;
  */
 function updateContentData(owner, formContent, isError) {
   var result = $.Deferred();
-  var content = formContent;
+  var content = formContent || '';
 
   content = getContentHtml(owner, content);
 

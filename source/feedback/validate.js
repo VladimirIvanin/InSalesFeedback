@@ -70,6 +70,26 @@ function validateFormData(dataForm) {
   };
 
   // content
+  if (!self.options.useDefaultContent && !updateFormData.content) {
+
+    var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent);
+    updateFormData.content = validateContentResult.value;
+
+    if (validateContentResult.isError) {
+      errors.push({
+        name: 'content',
+        errorMessage: validateContentResult.errorMessage
+      });
+    };
+
+    if (errors.length > 0) {
+      result.reject(errors);
+    }
+    else{
+      result.resolve(updateFormData);
+    }
+
+  }else{
   updateContentData(self, updateFormData.content, errors.length > 0).done(function (_content) {
     updateFormData.content = _content;
     var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent);
@@ -89,6 +109,8 @@ function validateFormData(dataForm) {
       result.resolve(updateFormData);
     }
   });
+
+  }
 
   return result.promise();
 }
@@ -194,24 +216,35 @@ function validateContent(content, isRequire) {
     errorMessage: 'Не заполнено поле текст сообщения',
     value: content
   };
+  if (!content) {
+    result.isError = true;
+    result.value = '';
+  }else{
+    var trimContent = content.trim();
 
-  var trimContent = content.trim()
-
-  if (!isRequire && content && trimContent == '' || !isRequire && !content) {
-    result.value = system.dataDefault.content;
-  }
-  else {
-    if (!content || trimContent == '') {
-      result.isError = true;
+    if (!isRequire && content && trimContent == '' || !isRequire && !content) {
+      result.value = system.dataDefault.content;
+    }
+    else {
+      if (!content || trimContent == '') {
+        result.isError = true;
+      }
     }
   }
 
   return result;
 }
 
+function checkNameContent($form) {
+  var $content = $form.find('[name="content"]');
+  if ($content.length == 0) {
+    console.warn('В форме отсутствует поле content', $form);
+  }
+}
 
 module.exports = {
   'checkDuplicateId': checkDuplicateId,
   'checkProduct': checkProduct,
+  'checkNameContent': checkNameContent,
   'validateFormData': validateFormData
 }
