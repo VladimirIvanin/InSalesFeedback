@@ -70,7 +70,7 @@ function validateFormData(dataForm) {
   };
 
   // content
-  updateContentData(self, updateFormData.content).done(function (_content) {
+  updateContentData(self, updateFormData.content, errors.length > 0).done(function (_content) {
     updateFormData.content = _content;
     var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent);
     updateFormData.content = validateContentResult.value;

@@ -206,7 +206,7 @@ Feedback.prototype.initFeedback = function ($elem, options) {
   self.isPageProduct = checkProduct();
   checkDuplicateId(self.$element);
   self.initBinding();
-  console.log(self.isPageProduct);
+
   return;
 };
 
@@ -343,13 +343,13 @@ module.exports = sendMessage;
 },{"./helpers":3}],7:[function(require,module,exports){
 var getPageLink = require('./helpers').getPageLink;
 
-function updateContentData(owner, formContent) {
+function updateContentData(owner, formContent, isError) {
   var result = $.Deferred();
   var content = formContent;
 
   content = getContentHtml(owner, content);
 
-  if (owner.isPageProduct && owner.options.includeProductInfo) {
+  if (owner.isPageProduct && owner.options.includeProductInfo && !isError) {
     $.ajax({
       url: window.location.pathname + '.json',
       type: 'GET',
@@ -385,7 +385,7 @@ function updateContentData(owner, formContent) {
     }
   }
 
-  if (!owner.isPageProduct || !owner.options.includeProductInfo) {
+  if (!owner.isPageProduct || !owner.options.includeProductInfo || isError) {
     result.resolve(content);
   }
 
@@ -414,7 +414,10 @@ function getRow(key, value) {
 
 function getContentHtml(owner, content) {
   var resultContent = content;
-  
+  var $html = owner.$element.find( '['+owner.options.selectors.html+']' );
+  $html.each(function(index, el) {
+    resultContent += $(el).html();
+  });
   return resultContent;
 }
 
@@ -495,7 +498,7 @@ function validateFormData(dataForm) {
     })
   };
 
-  updateContentData(self, updateFormData.content).done(function (_content) {
+  updateContentData(self, updateFormData.content, errors.length > 0).done(function (_content) {
     updateFormData.content = _content;
     var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent);
     updateFormData.content = validateContentResult.value;
@@ -705,7 +708,7 @@ var defaults = {
 
 var system = {
   NAME: 'InSalesFeedback',
-  VERSION: '0.0.1',
+  VERSION: '0.5.0',
   NAMESPACE: '.InSalesFeedback',
   names: {
     from: 'from', 

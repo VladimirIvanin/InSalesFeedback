@@ -3,13 +3,13 @@ var getPageLink = require('./helpers').getPageLink;
 /**
  * Преобразование контента
  */
-function updateContentData(owner, formContent) {
+function updateContentData(owner, formContent, isError) {
   var result = $.Deferred();
   var content = formContent;
 
   content = getContentHtml(owner, content);
 
-  if (owner.isPageProduct && owner.options.includeProductInfo) {
+  if (owner.isPageProduct && owner.options.includeProductInfo && !isError) {
     $.ajax({
       url: window.location.pathname + '.json',
       type: 'GET',
@@ -45,7 +45,7 @@ function updateContentData(owner, formContent) {
     }
   }
 
-  if (!owner.isPageProduct || !owner.options.includeProductInfo) {
+  if (!owner.isPageProduct || !owner.options.includeProductInfo || isError) {
     result.resolve(content);
   }
 
@@ -74,7 +74,10 @@ function getRow(key, value) {
 
 function getContentHtml(owner, content) {
   var resultContent = content;
-  
+  var $html = owner.$element.find( '['+owner.options.selectors.html+']' );
+  $html.each(function(index, el) {
+    resultContent += $(el).html();
+  });
   return resultContent;
 }
 

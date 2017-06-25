@@ -33,7 +33,7 @@ Feedback.prototype.initFeedback = function ($elem, options) {
   self.isPageProduct = checkProduct();
   checkDuplicateId(self.$element);
   self.initBinding();
-  console.log(self.isPageProduct);
+
   return;
 };
 
