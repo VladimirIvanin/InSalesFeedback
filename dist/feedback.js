@@ -120,9 +120,17 @@ function parseSerialize(string) {
           if (!_data[ VResult[0] ][VResult[1]]) {
             _data[ VResult[0] ][VResult[1]] = [];
           }
-          _data[ VResult[0] ][VResult[1]].push(decodeURIComponent(part[ 1 ]));
+          var _part = decodeURIComponent(part[ 1 ]);
+          if (_part === 'undefined') {
+            _part = '';
+          }
+          _data[ VResult[0] ][VResult[1]].push(_part);
         }else{
-          _data[ part[ 0 ] ] = decodeURIComponent(part[ 1 ]);
+          var _part = decodeURIComponent(part[ 1 ]);
+          if (_part === 'undefined') {
+            _part = '';
+          }
+          _data[ part[ 0 ] ] = _part;
         }
       }
 
@@ -179,6 +187,7 @@ var errorRender = require('./render').errorRender;
 var successRender = require('./render').successRender;
 var checkDuplicateId = require('./validate').checkDuplicateId;
 var checkProduct = require('./validate').checkProduct;
+var checkNameContent = require('./validate').checkNameContent;
 var validateFormData = require('./validate').validateFormData;
 
 var Feedback = function ($elem, options) {
@@ -207,12 +216,17 @@ Feedback.prototype.initFeedback = function ($elem, options) {
   checkDuplicateId(self.$element);
   self.initBinding();
 
+  if (!self.options.useDefaultContent) {
+    checkNameContent(self.$element);
+  }
+
   return;
 };
 
 module.exports = Feedback;
 },{"../variables":10,"./binding":1,"./eventMachine":2,"./render":5,"./sendMessage":6,"./validate":8}],5:[function(require,module,exports){
 var getDataAttrName = require('./helpers').getDataAttrName;
+var system = require('../variables').system;
 
 function errorRender(errors) {
   var self = this;
@@ -220,11 +234,12 @@ function errorRender(errors) {
   var fieldSelector = getDataAttrName(self.options.selectors.field) + ':first';
   var inputErrorSelector = getDataAttrName(self.options.selectors.inputError);
   var errorSelector = getDataAttrName(self.options.selectors.error);
+  var errorsSelector = getDataAttrName(self.options.selectors.errors);
+  var errorClass = self.options.classes.errorInput;
+  var errorClassField = self.options.classes.errorField;
 
   $.each(errors, function(index, el) {
-    var errorClass = self.options.classes.errorInput;
-    var errorClassField = self.options.classes.errorField;
-    var $input = $('[name="'+el.name+'"]');
+    var $input = self.$element.find('[name="'+el.name+'"]');
     var $field = $input.parents( fieldSelector );
     var $inputErrorSelector = $field.find( inputErrorSelector );
     $input.addClass(errorClass);
@@ -234,12 +249,33 @@ function errorRender(errors) {
 
     if (self.options.hideErrorOnFocus) {
       $input.on('click', function(event) {
-        $input.removeClass(errorClass);
-        $field.removeClass(errorClassField);
-
-        renderWithOptions($inputErrorSelector, '', '', false, useJqueryToggle);
-        renderWithOptions(self.$element.find(errorSelector), '', '', false, useJqueryToggle);
+        removeErrors($input, $field, $inputErrorSelector);
       });
+    }
+
+  });
+
+  function removeErrors($input, $field, $inputErrorSelector) {
+    $input.removeClass(errorClass);
+    $field.removeClass(errorClassField);
+
+    renderWithOptions($inputErrorSelector, '', '', false, useJqueryToggle);
+    renderWithOptions(self.$element.find(errorSelector), '', '', false, useJqueryToggle);
+    renderWithOptions(self.$element.find(errorsSelector), '', '', false, useJqueryToggle);
+  }
+
+  var errorsNames = [];
+
+  $.each(errors, function(index, err) {
+    errorsNames.push(err.name);
+  });
+
+  $.each(system.names, function(index, system_name) {
+    if (errorsNames.indexOf(system_name) == -1) {
+      var $input = self.$element.find('[name="'+system_name+'"]');
+      var $field = $input.parents( fieldSelector );
+      var $inputErrorSelector = $field.find( inputErrorSelector );
+      removeErrors($input, $field, $inputErrorSelector)
     }
   });
 
@@ -247,6 +283,12 @@ function errorRender(errors) {
     self.$element.addClass(self.options.classes.errorForm);
 
     renderWithOptions(self.$element.find(errorSelector), self.options.messages.error, '', true, useJqueryToggle);
+
+    var _errorsContent = '';
+    _.forEach(errors, function (err) {
+      _errorsContent += err.errorMessage + '<br />'
+    });
+    renderWithOptions(self.$element.find(errorsSelector), _errorsContent, '', true, useJqueryToggle);
   }
 }
 
@@ -261,6 +303,7 @@ function successRender() {
   var fieldSelector = getDataAttrName(self.options.selectors.field);
   var inputErrorSelector = getDataAttrName(self.options.selectors.inputError);
   var errorSelector = getDataAttrName(self.options.selectors.error);
+  var errorsSelector = getDataAttrName(self.options.selectors.errors);
   var successSelector = getDataAttrName(self.options.selectors.success);
 
   self.$element.find('[name]').removeClass(errorClass);
@@ -269,6 +312,9 @@ function successRender() {
 
   var $errorSelector = $form.find(errorSelector);
   renderWithOptions($errorSelector, '', '', false, useJqueryToggle);
+
+  var $errorsSelector = $form.find(errorsSelector);
+  renderWithOptions($errorsSelector, '', '', false, useJqueryToggle);
 
   var $inputErrorSelector = $form.find(inputErrorSelector);
   renderWithOptions($inputErrorSelector, '', '', false, useJqueryToggle);
@@ -312,7 +358,7 @@ module.exports = {
   'errorRender': errorRender,
   'successRender': successRender
 };
-},{"./helpers":3}],6:[function(require,module,exports){
+},{"../variables":10,"./helpers":3}],6:[function(require,module,exports){
 var parseSerialize = require('./helpers').parseSerialize;
 
 function sendMessage(dataForm) {
@@ -345,8 +391,9 @@ var getPageLink = require('./helpers').getPageLink;
 
 function updateContentData(owner, formContent, isError) {
   var result = $.Deferred();
-  var content = formContent;
+  var content = formContent || '';
 
+  content = getCustomContent(owner, content);
   content = getContentHtml(owner, content);
 
   if (owner.isPageProduct && owner.options.includeProductInfo && !isError) {
@@ -417,6 +464,20 @@ function getContentHtml(owner, content) {
   var $html = owner.$element.find( '['+owner.options.selectors.html+']' );
   $html.each(function(index, el) {
     resultContent += $(el).html();
+  });
+  return resultContent;
+}
+
+function getCustomContent(owner, content) {
+  var resultContent = content;
+  var $customContent = owner.$element.find( '['+owner.options.selectors.customContent+']' );
+  $customContent.each(function(index, el) {
+    var key = $(el).data( owner.options.selectors.customContent.replace('data-', '') );
+    var value = $(el).val();
+    if (!value) {
+      value = $(el).html();
+    }
+    resultContent += getRow(key, value);
   });
   return resultContent;
 }
@@ -498,6 +559,26 @@ function validateFormData(dataForm) {
     })
   };
 
+  if (!self.options.useDefaultContent && !updateFormData.content) {
+
+    var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent);
+    updateFormData.content = validateContentResult.value;
+
+    if (validateContentResult.isError) {
+      errors.push({
+        name: 'content',
+        errorMessage: validateContentResult.errorMessage
+      });
+    };
+
+    if (errors.length > 0) {
+      result.reject(errors);
+    }
+    else{
+      result.resolve(updateFormData);
+    }
+
+  }else{
   updateContentData(self, updateFormData.content, errors.length > 0).done(function (_content) {
     updateFormData.content = _content;
     var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent);
@@ -517,6 +598,8 @@ function validateFormData(dataForm) {
       result.resolve(updateFormData);
     }
   });
+
+  }
 
   return result.promise();
 }
@@ -615,25 +698,36 @@ function validateContent(content, isRequire) {
     errorMessage: 'Не заполнено поле текст сообщения',
     value: content
   };
+  if (!content) {
+    result.isError = true;
+    result.value = '';
+  }else{
+    var trimContent = content.trim();
 
-  var trimContent = content.trim()
-
-  if (!isRequire && content && trimContent == '' || !isRequire && !content) {
-    result.value = system.dataDefault.content;
-  }
-  else {
-    if (!content || trimContent == '') {
-      result.isError = true;
+    if (!isRequire && content && trimContent == '' || !isRequire && !content) {
+      result.value = system.dataDefault.content;
+    }
+    else {
+      if (!content || trimContent == '') {
+        result.isError = true;
+      }
     }
   }
 
   return result;
 }
 
+function checkNameContent($form) {
+  var $content = $form.find('[name="content"]');
+  if ($content.length == 0) {
+    console.warn('В форме отсутствует поле content', $form);
+  }
+}
 
 module.exports = {
   'checkDuplicateId': checkDuplicateId,
   'checkProduct': checkProduct,
+  'checkNameContent': checkNameContent,
   'validateFormData': validateFormData
 }
 },{"../variables":10,"./helpers":3,"./updateContentData":7}],9:[function(require,module,exports){
@@ -697,12 +791,14 @@ var defaults = {
   },
   selectors: {
     html: 'data-feedback-html', 
+    customContent: 'data-feedback-custom-content', 
     submit: 'data-feedback-submit', 
     field: 'data-feedback-field', 
     input: 'data-feedback-input', 
     inputError: 'data-feedback-input-error', 
     success: 'data-feedback-success', 
-    error: 'data-feedback-error' 
+    error: 'data-feedback-error', 
+    errors: 'data-feedback-errors' 
   }
 }
 

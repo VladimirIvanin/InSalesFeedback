@@ -7,6 +7,7 @@ function updateContentData(owner, formContent, isError) {
   var result = $.Deferred();
   var content = formContent || '';
 
+  content = getCustomContent(owner, content);
   content = getContentHtml(owner, content);
 
   if (owner.isPageProduct && owner.options.includeProductInfo && !isError) {
@@ -77,6 +78,20 @@ function getContentHtml(owner, content) {
   var $html = owner.$element.find( '['+owner.options.selectors.html+']' );
   $html.each(function(index, el) {
     resultContent += $(el).html();
+  });
+  return resultContent;
+}
+
+function getCustomContent(owner, content) {
+  var resultContent = content;
+  var $customContent = owner.$element.find( '['+owner.options.selectors.customContent+']' );
+  $customContent.each(function(index, el) {
+    var key = $(el).data( owner.options.selectors.customContent.replace('data-', '') );
+    var value = $(el).val();
+    if (!value) {
+      value = $(el).html();
+    }
+    resultContent += getRow(key, value);
   });
   return resultContent;
 }

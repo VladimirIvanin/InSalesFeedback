@@ -26,6 +26,7 @@ var defaults = {
   },
   selectors: {
     html: 'data-feedback-html', // контент из html
+    customContent: 'data-feedback-custom-content', // кастомные строки контента (Принимает название строки, содержимое берется как из инпута так и из html val()/html())
     submit: 'data-feedback-submit', // кнопка отправить (не используется)
     field: 'data-feedback-field', // обертка инпута и лейбла
     input: 'data-feedback-input', // инпут с данными
