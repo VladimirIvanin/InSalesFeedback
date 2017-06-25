@@ -5,6 +5,7 @@ var sendMessage = require('./sendMessage');
 var errorRender = require('./render').errorRender;
 var successRender = require('./render').successRender;
 var checkDuplicateId = require('./validate').checkDuplicateId;
+var checkProduct = require('./validate').checkProduct;
 var validateFormData = require('./validate').validateFormData;
 
 var Feedback = function ($elem, options) {
@@ -29,9 +30,10 @@ var Feedback = function ($elem, options) {
 Feedback.prototype.initFeedback = function ($elem, options) {
   var self = this;
 
+  self.isPageProduct = checkProduct();
   checkDuplicateId(self.$element);
   self.initBinding();
-
+  console.log(self.isPageProduct);
   return;
 };
 

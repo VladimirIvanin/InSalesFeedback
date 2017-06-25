@@ -1,4 +1,6 @@
 var defaults = {
+  includeProductInfo: true, // Добавлять информацию о товаре на странице товара?
+  messageContent: null, // Контент письма
   urlPageOnContent: true, // Добавлять в сообщение ссылку на страницу?
   useJqueryToggle: true, // Использовать переключения show/hide для уведомлений
   hideSuccessMessageTimer: 5000, // через сколько скрыть сообщение
@@ -23,7 +25,8 @@ var defaults = {
     error: 'Неверно заполнены поля!'
   },
   selectors: {
-    submit: 'data-feedback-submit', // кнопка отправить
+    html: 'data-feedback-html', // кнопка отправить (не используется)
+    submit: 'data-feedback-submit', // кнопка отправить (не используется)
     field: 'data-feedback-field', // обертка инпута и лейбла
     input: 'data-feedback-input', // инпут с данными
     inputError: 'data-feedback-input-error', // ошибка инпута

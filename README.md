@@ -3,7 +3,7 @@
 ## CDN
 
 ```html
-  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.2.0/dist/feedback.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.3.0/dist/feedback.js"></script>
 ```
 
 ## Пример

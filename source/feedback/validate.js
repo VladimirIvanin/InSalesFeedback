@@ -1,4 +1,5 @@
 var system = require('../variables').system;
+var updateContentData = require('./updateContentData');
 var testRequire = require('./helpers').testRequire;
 var getPhoneNumberLength = require('./helpers').getPhoneNumberLength;
 
@@ -10,6 +11,10 @@ function checkDuplicateId($element) {
       console.warn('Внимание! Задвоенный идентификатор - #' + $node.id + '. Форма может не корректно отправляться.');
     }
   }
+}
+
+function checkProduct() {
+  return window.location.pathname.indexOf('/product/') > -1;
 }
 
 // валидация данных из формы
@@ -65,21 +70,25 @@ function validateFormData(dataForm) {
   };
 
   // content
-  var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent);
-  updateFormData.content = validateContentResult.value;
-  if (validateContentResult.isError) {
-    errors.push({
-      name: 'content',
-      errorMessage: validateContentResult.errorMessage
-    })
-  };
+  updateContentData(self, updateFormData.content).done(function (_content) {
+    updateFormData.content = _content;
+    var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent);
+    updateFormData.content = validateContentResult.value;
 
-  if (errors.length > 0) {
-    result.reject(errors);
-  }
-  else{
-    result.resolve(updateFormData);
-  }
+    if (validateContentResult.isError) {
+      errors.push({
+        name: 'content',
+        errorMessage: validateContentResult.errorMessage
+      });
+    };
+
+    if (errors.length > 0) {
+      result.reject(errors);
+    }
+    else{
+      result.resolve(updateFormData);
+    }
+  });
 
   return result.promise();
 }
@@ -200,7 +209,9 @@ function validateContent(content, isRequire) {
   return result;
 }
 
+
 module.exports = {
   'checkDuplicateId': checkDuplicateId,
+  'checkProduct': checkProduct,
   'validateFormData': validateFormData
 }

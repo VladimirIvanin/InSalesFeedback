@@ -55,7 +55,7 @@ function binding() {
 }
 
 module.exports = binding;
-},{"../variables":9,"./helpers":3}],2:[function(require,module,exports){
+},{"../variables":10,"./helpers":3}],2:[function(require,module,exports){
 var system = require('../variables').system;
 
 function eventMachine(name, $target, data) {
@@ -91,7 +91,7 @@ var capitalize = function(_string) {
 }
 
 module.exports = eventMachine;
-},{"../variables":9}],3:[function(require,module,exports){
+},{"../variables":10}],3:[function(require,module,exports){
 function parseSerialize(string) {
   if (string == "") {
     return {};
@@ -178,6 +178,7 @@ var sendMessage = require('./sendMessage');
 var errorRender = require('./render').errorRender;
 var successRender = require('./render').successRender;
 var checkDuplicateId = require('./validate').checkDuplicateId;
+var checkProduct = require('./validate').checkProduct;
 var validateFormData = require('./validate').validateFormData;
 
 var Feedback = function ($elem, options) {
@@ -202,14 +203,15 @@ var Feedback = function ($elem, options) {
 Feedback.prototype.initFeedback = function ($elem, options) {
   var self = this;
 
+  self.isPageProduct = checkProduct();
   checkDuplicateId(self.$element);
   self.initBinding();
-
+  console.log(self.isPageProduct);
   return;
 };
 
 module.exports = Feedback;
-},{"../variables":9,"./binding":1,"./eventMachine":2,"./render":5,"./sendMessage":6,"./validate":7}],5:[function(require,module,exports){
+},{"../variables":10,"./binding":1,"./eventMachine":2,"./render":5,"./sendMessage":6,"./validate":8}],5:[function(require,module,exports){
 var getDataAttrName = require('./helpers').getDataAttrName;
 
 function errorRender(errors) {
@@ -312,7 +314,6 @@ module.exports = {
 };
 },{"./helpers":3}],6:[function(require,module,exports){
 var parseSerialize = require('./helpers').parseSerialize;
-var getPageLink = require('./helpers').getPageLink;
 
 function sendMessage(dataForm) {
   var self = this;
@@ -323,10 +324,6 @@ function sendMessage(dataForm) {
     lang: _lang,
     feedback: dataForm,
   };
-
-  if (self.options.urlPageOnContent) {
-    _message.feedback.content = updateContentFooter(_message.feedback.content);
-  }
 
   $.post('/client_account/feedback.json', _message)
     .done(function (response) {
@@ -342,14 +339,98 @@ function sendMessage(dataForm) {
   return result.promise();
 }
 
+module.exports = sendMessage;
+},{"./helpers":3}],7:[function(require,module,exports){
+var getPageLink = require('./helpers').getPageLink;
+
+function updateContentData(owner, formContent) {
+  var result = $.Deferred();
+  var content = formContent;
+
+  content = getContentHtml(owner, content);
+
+  if (owner.isPageProduct && owner.options.includeProductInfo) {
+    $.ajax({
+      url: window.location.pathname + '.json',
+      type: 'GET',
+      dataType: 'json'
+    })
+    .done(function(success) {
+      if (success && success.product) {
+        if (owner.options.messageContent) {
+          content = updateContentTop(content, owner.options.messageContent);
+        }
+        content = getProductInfo(success.product, content);
+        if (owner.options.urlPageOnContent) {
+          content = updateContentFooter(content);
+        }
+        result.resolve(content);
+      }else{
+        if (owner.options.urlPageOnContent) {
+          content = updateContentFooter(content);
+        }
+        result.resolve(content);
+      }
+    })
+    .fail(function() {
+      if (owner.options.urlPageOnContent) {
+        content = updateContentFooter(content);
+      }
+      result.resolve(content);
+    })
+
+  }else{
+    if (owner.options.urlPageOnContent) {
+      content = updateContentFooter(content);
+    }
+  }
+
+  if (!owner.isPageProduct || !owner.options.includeProductInfo) {
+    result.resolve(content);
+  }
+
+  return result.promise();
+}
+
+function getProductInfo(product, content) {
+  var productContent = '<div><a href="'+product.url+'">'
+  if (product.first_image) {
+    productContent += '<img src="'+product.first_image.medium_url+'" />';
+  }
+  productContent += '</a></div>';
+
+  productContent += getRow('Товар', product.title);
+
+  if (product.sku) {
+    productContent += getRow('Артикул', product.sku);
+  }
+
+  return content + productContent;
+}
+
+function getRow(key, value) {
+  return '<div><strong>'+key+':</strong> '+value+'</div>';
+}
+
+function getContentHtml(owner, content) {
+  var resultContent = content;
+  
+  return resultContent;
+}
+
+function updateContentTop(content, messageContent) {
+  var _messageContent = '<br />' + messageContent + '<br />';
+  return content + _messageContent;
+}
 function updateContentFooter(content) {
   var pageLink = '<br /> Отправлено со страницы: ' +  getPageLink();
   return content + pageLink;
 }
 
-module.exports = sendMessage;
-},{"./helpers":3}],7:[function(require,module,exports){
+module.exports = updateContentData;
+},{"./helpers":3}],8:[function(require,module,exports){
 var system = require('../variables').system;
+var updateContentData = require('./updateContentData');
 var testRequire = require('./helpers').testRequire;
 var getPhoneNumberLength = require('./helpers').getPhoneNumberLength;
 
@@ -361,6 +442,10 @@ function checkDuplicateId($element) {
       console.warn('Внимание! Задвоенный идентификатор - #' + $node.id + '. Форма может не корректно отправляться.');
     }
   }
+}
+
+function checkProduct() {
+  return window.location.pathname.indexOf('/product/') > -1;
 }
 
 function validateFormData(dataForm) {
@@ -410,21 +495,25 @@ function validateFormData(dataForm) {
     })
   };
 
-  var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent);
-  updateFormData.content = validateContentResult.value;
-  if (validateContentResult.isError) {
-    errors.push({
-      name: 'content',
-      errorMessage: validateContentResult.errorMessage
-    })
-  };
+  updateContentData(self, updateFormData.content).done(function (_content) {
+    updateFormData.content = _content;
+    var validateContentResult = validateContent(updateFormData.content, !self.options.useDefaultContent);
+    updateFormData.content = validateContentResult.value;
 
-  if (errors.length > 0) {
-    result.reject(errors);
-  }
-  else{
-    result.resolve(updateFormData);
-  }
+    if (validateContentResult.isError) {
+      errors.push({
+        name: 'content',
+        errorMessage: validateContentResult.errorMessage
+      });
+    };
+
+    if (errors.length > 0) {
+      result.reject(errors);
+    }
+    else{
+      result.resolve(updateFormData);
+    }
+  });
 
   return result.promise();
 }
@@ -538,11 +627,13 @@ function validateContent(content, isRequire) {
   return result;
 }
 
+
 module.exports = {
   'checkDuplicateId': checkDuplicateId,
+  'checkProduct': checkProduct,
   'validateFormData': validateFormData
 }
-},{"../variables":9,"./helpers":3}],8:[function(require,module,exports){
+},{"../variables":10,"./helpers":3,"./updateContentData":7}],9:[function(require,module,exports){
 var Feedback = require('feedback');
 var system = require('variables').system;
 
@@ -574,8 +665,10 @@ var system = require('variables').system;
     return this;
   }
 })(jQuery, window);
-},{"feedback":4,"variables":9}],9:[function(require,module,exports){
+},{"feedback":4,"variables":10}],10:[function(require,module,exports){
 var defaults = {
+  includeProductInfo: true, 
+  messageContent: null, 
   urlPageOnContent: true, 
   useJqueryToggle: true, 
   hideSuccessMessageTimer: 5000, 
@@ -600,6 +693,7 @@ var defaults = {
     error: 'Неверно заполнены поля!'
   },
   selectors: {
+    html: 'data-feedback-html', 
     submit: 'data-feedback-submit', 
     field: 'data-feedback-field', 
     input: 'data-feedback-input', 
@@ -638,4 +732,4 @@ module.exports = {
   'defaults': defaults,
   'system': system
 }
-},{}]},{},[8]);
+},{}]},{},[9]);
