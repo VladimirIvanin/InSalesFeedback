@@ -3,7 +3,7 @@
 ## CDN
 
 ```html
-  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.11.0/dist/feedback.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.12.0/dist/feedback.js"></script>
 ```
 
 ## Настройки
@@ -14,6 +14,7 @@
 |-------------------------|---------|----------------------|--------------------------------------------------------------------------------------------------------|
 | require                 | array   | []                   | Обязательные поля. Например ['phone', 'name']                                                          |
 | useDefaultContent       | boolean | true                 | Если поля контент нет, то заполниться значение по умолчанию или из доп параметров и кастомных настроек |
+| includeProductInfo       | boolean | true                 | Добавлять информацию о товаре на странице товара? |
 | resetFormOnSubmit       | boolean | true                 | Очистить форму после отправки?                                                                         |
 | hideErrorOnFocus        | boolean | true                 | Скрывать ошибки при вводе?                                                                             |
 | useJqueryToggle         | boolean | true                 | Использовать переключения show/hide для уведомлений?                                                   |
@@ -58,6 +59,8 @@
   onSuccess: function(){}, // сообщение успешно отправлено
   onFail: function(){}, // Ошибка при отправке сообщения
   onError: function(){}, // Ошибка валидации
+  onBefore: function(){}, // перед отправкой
+  onAfter: function(){}, // после любого действия
   customValidate: null, // Своя валидация. Должна возвращать true/false. customValidate($form, dataForm). Синхронная функция.
 }
 ```

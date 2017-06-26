@@ -8,10 +8,12 @@ function binding() {
   var $form = self.$element;
 
   $form.on('submit', function(event) {
+    self.eventMachine('before', $form, {});
     event.preventDefault();
 
     var dataForm = parseSerialize($form.serialize());
     var customValidate = self.options.customValidate;
+
 
     if (customValidate && typeof customValidate == 'function') {
 
@@ -19,12 +21,15 @@ function binding() {
       if (isDone) {
         self.sendMessage(dataForm).done(function (onDone) {
           self.eventMachine('success', $form, onDone);
+          self.eventMachine('after', $form, dataForm);
         })
         .fail(function (onFail) {
           self.eventMachine('fail', $form, onFail);
+          self.eventMachine('after', $form, dataForm);
         });
       }else{
         self.eventMachine('error', $form, dataForm);
+        self.eventMachine('after', $form, dataForm);
       }
 
     }
@@ -32,16 +37,19 @@ function binding() {
       self.validateFormData(dataForm).done(function (updateFormData) {
         self.sendMessage(updateFormData).done(function (onDone) {
           self.eventMachine('success', $form, onDone);
+          self.eventMachine('after', $form, dataForm);
         })
         .fail(function (onFail) {
           var err = getFailerrors(onFail);
           self.errorRender(err);
           self.eventMachine('fail', $form, onFail);
+          self.eventMachine('after', $form, dataForm);
         });
       })
       .fail(function (onErrorData) {
         self.errorRender(onErrorData);
         self.eventMachine('error', $form, onErrorData);
+        self.eventMachine('after', $form, dataForm);
       });
 
     }
@@ -808,6 +816,8 @@ var defaults = {
   onSuccess: function(){}, 
   onFail: function(){}, 
   onError: function(){}, 
+  onBefore: function(){}, 
+  onAfter: function(){}, 
   customValidate: null, 
   classes: {
     errorInput: 'is-error-feedback-input',
@@ -842,7 +852,7 @@ var defaults = {
 
 var system = {
   NAME: 'InSalesFeedback',
-  VERSION: '0.11.0',
+  VERSION: '0.12.0',
   NAMESPACE: '.InSalesFeedback',
   names: {
     from: 'from', 
@@ -859,6 +869,8 @@ var system = {
     content: 'Заказ обратного звонка.' 
   },
   events: {
+    before: 'before::feedback', 
+    after: 'after::feedback', 
     success: 'success::feedback', 
     fail: 'fail::feedback', 
     error: 'error::feedback' 

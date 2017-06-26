@@ -12,6 +12,8 @@ var defaults = {
   onSuccess: function(){}, // сообщение успешно отправлено
   onFail: function(){}, // Ошибка при отправке сообщения
   onError: function(){}, // Ошибка валидации
+  onBefore: function(){}, // перед отправкой
+  onAfter: function(){}, // после любого действия
   customValidate: null, // Своя валидация. Должна возвращать true/false. customValidate($form, dataForm). Синхронная функция
   classes: {
     errorInput: 'is-error-feedback-input',
@@ -46,7 +48,7 @@ var defaults = {
 
 var system = {
   NAME: 'InSalesFeedback',
-  VERSION: '0.11.0',
+  VERSION: '0.12.0',
   NAMESPACE: '.InSalesFeedback',
   names: {
     from: 'from', // адрес отправителя
@@ -63,6 +65,8 @@ var system = {
     content: 'Заказ обратного звонка.' // тело сообщения (обязательное)
   },
   events: {
+    before: 'before::feedback', // перед отправкой
+    after: 'after::feedback', // после любого действия
     success: 'success::feedback', // сообщение успешно отправлено
     fail: 'fail::feedback', // Ошибка при отправке сообщения
     error: 'error::feedback' // Ошибка валидации
