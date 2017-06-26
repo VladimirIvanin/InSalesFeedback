@@ -1,11 +1,11 @@
 {
   "name": "InSalesFeedback",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Плагин для отправки сообщений на платформе InSales",
   "main": "dist/feedback.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node node_modules/isoptera -c config/dev.yaml -u shop-48497.myinsales.ru",
+    "dev": "node node_modules/isoptera -c config/dev.yaml",
     "dist": "node node_modules/isoptera -c config/dist.yaml"
   },
   "author": "Vladimir Ivanin",
