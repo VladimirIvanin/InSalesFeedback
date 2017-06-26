@@ -132,6 +132,19 @@ $(document).ready(function() {
     <div data-feedback-input-error></div>
   </div>
 
+  <input data-feedback-custom-content="кастомное поле 1" placeholder="кастомное значение 1" type="text" class="feedback-field text-field" />
+  <input data-feedback-custom-content="кастомное поле 2" placeholder="кастомное значение 2" type="text" class="feedback-field text-field" />
+
+  <div data-feedback-html>
+    <h2>
+      Кастомный контент в виде html.
+    </h2>
+    <p>
+      Внимание! Если добавить сюда много ссылок или специфичную верстку, скорее всего такой контент будет вырезан сервером почты. Переносы строки заменяются на <br>, т.е. в таком виде стоит избегать переносов строки.
+    </p>
+
+  </div>
+
   <div class="feedback-row form-error" data-feedback-error>
   </div>
   <div class="feedback-row form-done" data-feedback-success>
