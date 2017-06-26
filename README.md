@@ -91,7 +91,7 @@
 
 ```js
 $(document).ready(function() {
-  $('#feedback-form').InSalesFeedback({
+  $('.js-feedback').InSalesFeedback({
     require: ['phone'],
     onError: function(data) {
       // Ошибка валидации
@@ -110,7 +110,7 @@ $(document).ready(function() {
 ```
 
 ```liquid
-<form id="feedback-form" class="feedback" action="/client_account/feedback" method="post">
+<form class="feedback js-feedback" action="/client_account/feedback" method="post">
 
   <div class="feedback-row" data-feedback-field>
     <div class="feedback-field-wrap">
