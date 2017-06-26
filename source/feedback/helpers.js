@@ -77,7 +77,6 @@ function emailTest(email) {
   var _email = email || '';
   var VRegExp = new RegExp(/.+@.+\..+/g);
   var VResult = VRegExp.test(_email);
-  console.log(VResult);
   return VResult;
 }
 
