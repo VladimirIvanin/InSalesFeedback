@@ -1,5 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var parseSerialize = require('./helpers').parseSerialize;
+var getFailerrors = require('./helpers').getFailerrors;
 var system = require('../variables').system;
 
 function binding() {
@@ -33,6 +34,8 @@ function binding() {
           self.eventMachine('success', $form, onDone);
         })
         .fail(function (onFail) {
+          var err = getFailerrors(onFail);
+          self.errorRender(err);
           self.eventMachine('fail', $form, onFail);
         });
       })
@@ -53,6 +56,8 @@ function binding() {
     self.successRender();
   });
 }
+
+
 
 module.exports = binding;
 },{"../variables":10,"./helpers":3}],2:[function(require,module,exports){
@@ -165,6 +170,26 @@ function getPhoneNumberLength(phone) {
   return VResult.length;
 }
 
+function emailTest(email) {
+  var _email = email || '';
+  var VRegExp = new RegExp(/.+@.+\..+/g);
+  var VResult = VRegExp.test(_email);
+  return VResult;
+}
+
+function getFailerrors(fail) {
+  var result = [];
+  if (fail.errors) {
+    $.each(fail.errors, function(index, el) {
+      result.push({
+        name: index,
+        errorMessage: el[0] || ''
+      })
+    });
+  }
+  return result;
+}
+
 function getDataAttrName(name, value) {
   var resultName = (value) ? name + '="'+value+'"' : name;
 
@@ -174,6 +199,8 @@ function getDataAttrName(name, value) {
 module.exports = {
   'parseSerialize': parseSerialize,
   'testRequire': testRequire,
+  'emailTest': emailTest,
+  'getFailerrors': getFailerrors,
   'getPhoneNumberLength': getPhoneNumberLength,
   'getDataAttrName': getDataAttrName,
   'getPageLink': getPageLink
@@ -499,6 +526,7 @@ module.exports = updateContentData;
 var system = require('../variables').system;
 var updateContentData = require('./updateContentData');
 var testRequire = require('./helpers').testRequire;
+var emailTest = require('./helpers').emailTest;
 var getPhoneNumberLength = require('./helpers').getPhoneNumberLength;
 
 function checkDuplicateId($element) {
@@ -649,7 +677,7 @@ function validateFrom(from, isRequire, errorMessage) {
     result.value = 'shop@' + _host;
   }
   else {
-    if (!from || from == '') {
+    if (!from || from == '' || !emailTest(from)) {
       result.isError = true;
     }
   }
@@ -788,7 +816,7 @@ var defaults = {
     failForm: 'is-fail-feedback'
   },
   errorMessages: {
-    from: 'Не заполнено поле e-mail',
+    from: 'Поле e-mail имеет неверное значение',
     phone: 'Укажите номер в правильном формате!',
     name: 'Не заполнено поле имя',
     subject: 'Не заполнено поле тема сообщения',
@@ -814,7 +842,7 @@ var defaults = {
 
 var system = {
   NAME: 'InSalesFeedback',
-  VERSION: '0.9.0',
+  VERSION: '0.11.0',
   NAMESPACE: '.InSalesFeedback',
   names: {
     from: 'from', 
