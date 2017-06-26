@@ -61,9 +61,7 @@ function binding() {
 
   $(document).on(system.events.success, function(event) {
     if (self.options.resetFormOnSubmit) {
-      if ($form.get(0)) {
-        $form.get(0).reset();
-      }
+      $form.trigger('reset');
     }
     self.successRender();
   });

@@ -130,15 +130,17 @@ function validatePhone(phone, isRequire, phoneNumberLength, errorMessage) {
     result.value = system.dataDefault.phone;
   }
   else {
-    if (!phone || phone == '') {
-      // Если пусто
-      result.isError = true;
-    }else{
-      // Если не совпадает формат (кол-во цифр)
-      var numLen = getPhoneNumberLength(phone);
-
-      if (phoneNumberLength != numLen) {
+    if (isRequire) {
+      if (!phone || phone == '') {
+        // Если пусто
         result.isError = true;
+      }else{
+        // Если не совпадает формат (кол-во цифр)
+        var numLen = getPhoneNumberLength(phone);
+
+        if (phoneNumberLength > numLen) {
+          result.isError = true;
+        }
       }
     }
   }

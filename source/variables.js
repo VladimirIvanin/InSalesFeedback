@@ -23,7 +23,7 @@ var defaults = {
   },
   errorMessages: {
     from: 'Поле e-mail имеет неверное значение',
-    phone: 'Укажите номер в правильном формате!',
+    phone: 'Укажите номер в международном формате',
     name: 'Не заполнено поле имя',
     subject: 'Не заполнено поле тема сообщения',
     content: 'Не заполнено поле текст сообщения'
@@ -48,7 +48,7 @@ var defaults = {
 
 var system = {
   NAME: 'InSalesFeedback',
-  VERSION: '0.12.0',
+  VERSION: '0.13.0',
   NAMESPACE: '.InSalesFeedback',
   names: {
     from: 'from', // адрес отправителя

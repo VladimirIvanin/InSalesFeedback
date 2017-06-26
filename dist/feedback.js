@@ -57,9 +57,7 @@ function binding() {
 
   $(document).on(system.events.success, function(event) {
     if (self.options.resetFormOnSubmit) {
-      if ($form.get(0)) {
-        $form.get(0).reset();
-      }
+      $form.trigger('reset');
     }
     self.successRender();
   });
@@ -656,13 +654,15 @@ function validatePhone(phone, isRequire, phoneNumberLength, errorMessage) {
     result.value = system.dataDefault.phone;
   }
   else {
-    if (!phone || phone == '') {
-      result.isError = true;
-    }else{
-      var numLen = getPhoneNumberLength(phone);
-
-      if (phoneNumberLength != numLen) {
+    if (isRequire) {
+      if (!phone || phone == '') {
         result.isError = true;
+      }else{
+        var numLen = getPhoneNumberLength(phone);
+
+        if (phoneNumberLength <= numLen) {
+          result.isError = true;
+        }
       }
     }
   }
@@ -827,7 +827,7 @@ var defaults = {
   },
   errorMessages: {
     from: 'Поле e-mail имеет неверное значение',
-    phone: 'Укажите номер в правильном формате!',
+    phone: 'Укажите номер в международном формате',
     name: 'Не заполнено поле имя',
     subject: 'Не заполнено поле тема сообщения',
     content: 'Не заполнено поле текст сообщения'
@@ -852,7 +852,7 @@ var defaults = {
 
 var system = {
   NAME: 'InSalesFeedback',
-  VERSION: '0.12.0',
+  VERSION: '0.13.0',
   NAMESPACE: '.InSalesFeedback',
   names: {
     from: 'from', 
