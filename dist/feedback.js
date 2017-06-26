@@ -477,6 +477,9 @@ function getCustomContent(owner, content) {
     if (!value) {
       value = $(el).html();
     }
+    if (value === '') {
+      value = 'не заполнено';
+    }
     resultContent += getRow(key, value);
   });
   return resultContent;

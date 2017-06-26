@@ -1,4 +1,5 @@
 var parseSerialize = require('./helpers').parseSerialize;
+var getFailerrors = require('./helpers').getFailerrors;
 var system = require('../variables').system;
 
 /**
@@ -37,6 +38,8 @@ function binding() {
           self.eventMachine('success', $form, onDone);
         })
         .fail(function (onFail) {
+          var err = getFailerrors(onFail);
+          self.errorRender(err);
           self.eventMachine('fail', $form, onFail);
         });
       })
@@ -57,5 +60,7 @@ function binding() {
     self.successRender();
   });
 }
+
+
 
 module.exports = binding;

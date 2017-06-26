@@ -1,6 +1,7 @@
 var system = require('../variables').system;
 var updateContentData = require('./updateContentData');
 var testRequire = require('./helpers').testRequire;
+var emailTest = require('./helpers').emailTest;
 var getPhoneNumberLength = require('./helpers').getPhoneNumberLength;
 
 function checkDuplicateId($element) {
@@ -161,7 +162,7 @@ function validateFrom(from, isRequire, errorMessage) {
     result.value = 'shop@' + _host;
   }
   else {
-    if (!from || from == '') {
+    if (!from || from == '' || !emailTest(from)) {
       result.isError = true;
     }
   }

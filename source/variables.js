@@ -20,7 +20,7 @@ var defaults = {
     failForm: 'is-fail-feedback'
   },
   errorMessages: {
-    from: 'Не заполнено поле e-mail',
+    from: 'Поле e-mail имеет неверное значение',
     phone: 'Укажите номер в правильном формате!',
     name: 'Не заполнено поле имя',
     subject: 'Не заполнено поле тема сообщения',
@@ -33,20 +33,20 @@ var defaults = {
   },
   selectors: {
     html: 'data-feedback-html', // контент из html
-    customContent: 'data-feedback-custom-content', // кастомные строки контента (Принимает название строки, содержимое берется как из инпута так и из html val()/html())
+    customContent: 'data-feedback-custom-content', // кастомные строки контента (Принимает название строки, содержимое берется как из инпута `type=text, textarea` так и из html *val()/html()*)
     submit: 'data-feedback-submit', // кнопка отправить (не используется)
     field: 'data-feedback-field', // обертка инпута и лейбла
     input: 'data-feedback-input', // инпут с данными
     inputError: 'data-feedback-input-error', // ошибка инпута
     success: 'data-feedback-success', // поле для уведомления
     error: 'data-feedback-error', // поле для вывода ошибки (общее)
-    errors: 'data-feedback-errors' // поле для вывода ошибок (общее)
+    errors: 'data-feedback-errors' // поле для вывода ошибок
   }
 }
 
 var system = {
   NAME: 'InSalesFeedback',
-  VERSION: '0.9.0',
+  VERSION: '0.10.0',
   NAMESPACE: '.InSalesFeedback',
   names: {
     from: 'from', // адрес отправителя

@@ -73,6 +73,28 @@ function getPhoneNumberLength(phone) {
   return VResult.length;
 }
 
+function emailTest(email) {
+  var _email = email || '';
+  var VRegExp = new RegExp(/.+@.+\..+/g);
+  var VResult = VRegExp.test(_email);
+  console.log(VResult);
+  return VResult;
+}
+
+// получить ошибки из ответа сервера
+function getFailerrors(fail) {
+  var result = [];
+  if (fail.errors) {
+    $.each(fail.errors, function(index, el) {
+      result.push({
+        name: index,
+        errorMessage: el[0] || ''
+      })
+    });
+  }
+  return result;
+}
+
 function getDataAttrName(name, value) {
   var resultName = (value) ? name + '="'+value+'"' : name;
 
@@ -82,6 +104,8 @@ function getDataAttrName(name, value) {
 module.exports = {
   'parseSerialize': parseSerialize,
   'testRequire': testRequire,
+  'emailTest': emailTest,
+  'getFailerrors': getFailerrors,
   'getPhoneNumberLength': getPhoneNumberLength,
   'getDataAttrName': getDataAttrName,
   'getPageLink': getPageLink
