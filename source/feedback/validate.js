@@ -5,13 +5,17 @@ var emailTest = require('./helpers').emailTest;
 var getPhoneNumberLength = require('./helpers').getPhoneNumberLength;
 
 function checkDuplicateId($element) {
+  var error = false;
   var $node = $element.get(0);
   if ($node.id) {
     var $selector = $('[id="'+$node.id+'"]');
     if ($selector.length > 1) {
+      error = true;
       console.warn('Внимание! Задвоенный идентификатор - #' + $node.id + '. Форма может не корректно отправляться.');
     }
   }
+
+  return error;
 }
 
 function checkProduct() {
@@ -245,9 +249,27 @@ function checkNameContent($form) {
   }
 }
 
+function checkAgree($form, agreeSelector, useAgree, errorMessages) {
+  var confirm = true;
+
+  if (useAgree) {
+    var $agreeSelector = $form.find('['+agreeSelector+']');
+    if ($agreeSelector.length == 0 || !$agreeSelector.prop('checked')) {
+      confirm = false
+    }
+
+    if ($agreeSelector.length == 0) {
+      console.warn('Отсутствует чекбокс согласия на обработку персональных данных');
+    }
+  }
+
+  return confirm;
+}
+
 module.exports = {
   'checkDuplicateId': checkDuplicateId,
   'checkProduct': checkProduct,
+  'checkAgree': checkAgree,
   'checkNameContent': checkNameContent,
   'validateFormData': validateFormData
 }

@@ -4,15 +4,20 @@ var eventMachine = require('./eventMachine');
 var sendMessage = require('./sendMessage');
 var errorRender = require('./render').errorRender;
 var successRender = require('./render').successRender;
-var checkDuplicateId = require('./validate').checkDuplicateId;
 var checkProduct = require('./validate').checkProduct;
 var checkNameContent = require('./validate').checkNameContent;
 var validateFormData = require('./validate').validateFormData;
+var generateUUID = require('./helpers').generateUUID;
 
 var Feedback = function ($elem, options) {
   var self = this;
 
   self.$element = $($elem);
+
+  var _UUID = generateUUID();
+  self.UUID = _UUID;
+  self.$element[0].InSalesFeedbackUUID = _UUID;
+
 
   self.options = $.extend(true, {}, defaults, options);
 
@@ -32,7 +37,6 @@ Feedback.prototype.initFeedback = function ($elem, options) {
   var self = this;
 
   self.isPageProduct = checkProduct();
-  checkDuplicateId(self.$element);
   self.initBinding();
 
   if (!self.options.useDefaultContent) {

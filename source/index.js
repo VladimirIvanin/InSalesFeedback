@@ -1,15 +1,17 @@
 /* global $ */
 var Feedback = require('feedback');
 var system = require('variables').system;
+var checkDuplicateId = require('./feedback/validate').checkDuplicateId;
 
 (function ( $, window, undefined ) {
   var old = $.fn.InSalesFeedback;
 
   $.fn.InSalesFeedback = function (option) {
-    return this.each(function () {
+    return this.each(function (index) {
       var $self = $(this);
       var options = typeof option == 'object' && option;
       var data = $self.data(system.NAME);
+      var isDublicate = checkDuplicateId($self);
 
       if (!data && 'destroy' === option) {
         return;

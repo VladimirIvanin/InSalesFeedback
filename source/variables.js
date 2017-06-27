@@ -1,4 +1,6 @@
 var defaults = {
+  useAgree: false, // Проверять согласие на обработку персональных данных?
+  showMessageAgree: false, // выводить сообщение об ошибке согласия в блок ошибок?
   includeProductInfo: true, // Добавлять информацию о товаре на странице товара?
   messageContent: null, // Контент письма
   urlPageOnContent: true, // Добавлять в сообщение ссылку на страницу?
@@ -14,11 +16,15 @@ var defaults = {
   onError: function(){}, // Ошибка валидации
   onBefore: function(){}, // перед отправкой
   onAfter: function(){}, // после любого действия
+  onAgree: function(){}, // Проверка согласия прошла удачно
+  onNotagree: function(){}, // Ошибка при проверке согласия
   customValidate: null, // Своя валидация. Должна возвращать true/false. customValidate($form, dataForm). Синхронная функция
   classes: {
     errorInput: 'is-error-feedback-input',
     errorField: 'is-error-feedback-field',
     errorForm: 'is-error-feedback',
+    errorAgree: 'is-error-agree-feedback',
+    disabledButton: 'is-disabled-feedback',
     failForm: 'is-fail-feedback'
   },
   errorMessages: {
@@ -26,6 +32,7 @@ var defaults = {
     phone: 'Укажите номер в международном формате',
     name: 'Не заполнено поле имя',
     subject: 'Не заполнено поле тема сообщения',
+    agree: 'Необходимо принять условия передачи информации',
     content: 'Не заполнено поле текст сообщения'
   },
   messages: {
@@ -36,7 +43,8 @@ var defaults = {
   selectors: {
     html: 'data-feedback-html', // контент из html
     customContent: 'data-feedback-custom-content', // кастомные строки контента (Принимает название строки, содержимое берется как из инпута `type=text, textarea` так и из html *val()/html()*)
-    submit: 'data-feedback-submit', // кнопка отправить (не используется)
+    submit: 'data-feedback-submit', // кнопка отправить
+    agree: 'data-feedback-agree', // чекбокс согласие на обработку персональных данных
     field: 'data-feedback-field', // обертка инпута и лейбла
     input: 'data-feedback-input', // инпут с данными
     inputError: 'data-feedback-input-error', // ошибка инпута
@@ -48,7 +56,7 @@ var defaults = {
 
 var system = {
   NAME: 'InSalesFeedback',
-  VERSION: '0.13.0',
+  VERSION: '0.14.0',
   NAMESPACE: '.InSalesFeedback',
   names: {
     from: 'from', // адрес отправителя
@@ -69,6 +77,8 @@ var system = {
     after: 'after::feedback', // после любого действия
     success: 'success::feedback', // сообщение успешно отправлено
     fail: 'fail::feedback', // Ошибка при отправке сообщения
+    agree: 'agree::feedback', // Проверка согласия
+    notagree: 'notagree::feedback', // Ошибка при проверке согласия
     error: 'error::feedback' // Ошибка валидации
   }
 }

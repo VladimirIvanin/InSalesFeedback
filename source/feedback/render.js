@@ -66,7 +66,7 @@ function errorRender(errors) {
   }
 }
 
-function successRender() {
+function successRender(clearError) {
   var self = this;
   var $form = self.$element;
   var useJqueryToggle = self.options.useJqueryToggle;
@@ -93,8 +93,10 @@ function successRender() {
   var $inputErrorSelector = $form.find(inputErrorSelector);
   renderWithOptions($inputErrorSelector, '', '', false, useJqueryToggle);
 
-  var $success = $form.find(successSelector);
-  renderWithOptions($success, self.options.messages.success, '', true, useJqueryToggle, hideSuccessMessageTimer);
+  if (!clearError) {
+    var $success = $form.find(successSelector);
+    renderWithOptions($success, self.options.messages.success, '', true, useJqueryToggle, hideSuccessMessageTimer);
+  }
 }
 
 function renderWithOptions($selector, message, activeClass, isActive, useJqueryToggle, hideSuccessMessageTimer) {

@@ -3,23 +3,24 @@ dist: dist/feedback.js
 
 bfPlugins:
   - name: errorify
+  - name: browserify-banner
+    options:
+      file: dist/feedback.js
+      template: "<%= pkg.name %> v<%= pkg.version %>\n<%= pkg.url %>\n<%= pkg.author.name %>\n<%= moment().year() %>"
+      pkg:
+        name: 'InSalesFeedback'
+        version: '0.14.0'
+        url: https://github.com/VladimirIvanin/InSalesFeedback
+        author:
+          name: 'Vladimir Ivanin'
 
 bfTransforms:
   - name: eslintify
     options:
       passthrough: [ 'errors', 'warnings' ]
-  - name: scssify
-    options:
-      autoInject:
-        prepend: true
-        verbose: false
-      sass:
-        sourceMapEmbed: false
-        includePaths: ['node_modules']
-      postcss:
-        autoprefixer:
-          browsers: ['last 2 versions', '> 1%', 'IE >= 11']
   - name: jstify
     options:
       engine: global
-  - name: nocommentify
+  - name: uglifyify
+    options:
+      sourceMap: false

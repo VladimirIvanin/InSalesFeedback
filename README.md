@@ -3,7 +3,7 @@
 ## CDN
 
 ```html
-  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.13.0/dist/feedback.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.14.0/dist/feedback.js"></script>
 ```
 
 ## Настройки
@@ -14,6 +14,8 @@
 |-------------------------|---------|----------------------|--------------------------------------------------------------------------------------------------------|
 | require                 | array   | []                   | Обязательные поля. Например ['phone', 'name']                                                          |
 | useDefaultContent       | boolean | true                 | Если поля контент нет, то заполниться значение по умолчанию или из доп параметров и кастомных настроек |
+| useAgree       | boolean | false                 | Проверять согласие на обработку персональных данных? |
+| showMessageAgree       | boolean | false                 |  Выводить сообщение об ошибке согласия в блок ошибок? |
 | includeProductInfo       | boolean | true                 | Добавлять информацию о товаре на странице товара? |
 | resetFormOnSubmit       | boolean | true                 | Очистить форму после отправки?                                                                         |
 | hideErrorOnFocus        | boolean | true                 | Скрывать ошибки при вводе?                                                                             |
@@ -31,6 +33,8 @@
     errorInput: 'is-error-feedback-input',
     errorField: 'is-error-feedback-field',
     errorForm: 'is-error-feedback',
+    errorAgree: 'is-error-agree-feedback',
+    disabledButton: 'is-disabled-feedback',
     failForm: 'is-fail-feedback'
   }
 }
@@ -44,6 +48,8 @@
     html: 'data-feedback-html', // контент из html
     customContent: 'data-feedback-custom-content', // кастомные строки контента (Принимает название строки, содержимое берется как из инпута так и из html val()/html())
     field: 'data-feedback-field', // обертка инпута
+    submit: 'data-feedback-submit', // кнопка отправить
+    agree: 'data-feedback-agree', // чекбокс согласие на обработку персональных данных
     inputError: 'data-feedback-input-error', // ошибка инпута (должна быть внутри data-feedback-field)
     success: 'data-feedback-success', // поле для уведомления
     error: 'data-feedback-error', // поле для вывода ошибки (общее)
@@ -61,6 +67,8 @@
   onError: function(){}, // Ошибка валидации
   onBefore: function(){}, // перед отправкой
   onAfter: function(){}, // после любого действия
+  onAgree: function(){}, // Проверка согласия прошла удачно
+  onNotagree: function(){}, // Ошибка при проверке согласия
   customValidate: null, // Своя валидация. Должна возвращать true/false. customValidate($form, dataForm). Синхронная функция.
 }
 ```
@@ -75,6 +83,7 @@
     phone: 'Укажите номер в правильном формате!',
     name: 'Не заполнено поле имя',
     subject: 'Не заполнено поле тема сообщения',
+    agree: 'Необходимо принять условия передачи информации',
     content: 'Не заполнено поле текст сообщения'
   },
   // фразы блоков data-feedback-success/data-feedback-error
@@ -153,7 +162,16 @@ $(document).ready(function() {
   </div>
 
   <div class="feedback-row">
-    <button type="submit" name="button">
+    <label>
+      <span>
+        Cогласиться на обработку персональных данных
+      </span>
+      <input type="checkbox" name="" value="" data-feedback-agree>
+    </label>
+  </div>
+
+  <div class="feedback-row">
+    <button type="submit" name="button" data-feedback-submit>
       Заказать
     </button>
   </div>
