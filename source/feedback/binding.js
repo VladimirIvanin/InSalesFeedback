@@ -14,11 +14,6 @@ function binding() {
   var $submit = $form.find( getDataAttrName(options.selectors.submit) );
   var $agree = $form.find( getDataAttrName(options.selectors.agree) );
 
-  if ($submit.length == 0) {
-    console.warn('Отсутствует кнопка отправления формы.');
-    $submit = $form.find( '[type="submit"]' );
-  }
-
   $form.on('submit', function(event) {
     self.eventMachine('before', $form, {});
     event.preventDefault();
@@ -125,6 +120,11 @@ function binding() {
   });
 
   function triggerSubmit(isActive) {
+    if ($submit.length == 0) {
+      console.warn('Отсутствует кнопка отправления формы.');
+      $submit = $form.find( '[type="submit"]' );
+    }
+
     if (!isActive) {
       $submit.addClass(options.classes.disabledButton).prop('disabled', true).attr('disabled', 'disabled');
       $agree.addClass(options.classes.errorAgree)
