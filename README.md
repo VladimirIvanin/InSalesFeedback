@@ -183,3 +183,9 @@ $(document).ready(function() {
 
 </form>
 ```
+
+## Плагины для InSales
+
+- [Избранное](https://github.com/VladimirIvanin/favorites)
+- [Ранее просмотренные товары](https://github.com/VladimirIvanin/RecentlyView)
+- [Определение местоположения пользователя](https://github.com/VladimirIvanin/geoManager)
