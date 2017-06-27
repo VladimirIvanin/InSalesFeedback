@@ -11,7 +11,7 @@ function checkDuplicateId($element) {
     var $selector = $('[id="'+$node.id+'"]');
     if ($selector.length > 1) {
       error = true;
-      console.warn('Внимание! Задвоенный идентификатор - #' + $node.id + '. Форма может не корректно отправляться.');
+      console.warn('Внимание! Задвоенный идентификатор - #' + $node.id + '. Форма может некорректно отправляться.');
     }
   }
 

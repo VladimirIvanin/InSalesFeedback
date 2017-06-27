@@ -56,7 +56,7 @@ var defaults = {
 
 var system = {
   NAME: 'InSalesFeedback',
-  VERSION: '0.14.1',
+  VERSION: '0.14.2',
   NAMESPACE: '.InSalesFeedback',
   names: {
     from: 'from', // адрес отправителя
