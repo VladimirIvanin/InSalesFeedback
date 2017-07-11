@@ -3,7 +3,7 @@
 ## CDN
 
 ```html
-  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.14.2/dist/feedback.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.14.3/dist/feedback.js"></script>
 ```
 
 ## Настройки
@@ -156,7 +156,7 @@ $(document).ready(function() {
     </p>
   </div>
 
-  <div class="feedback-row form-error" data-feedback-error>
+  <div class="feedback-row form-error" data-feedback-errors>
   </div>
   <div class="feedback-row form-done" data-feedback-success>
   </div>

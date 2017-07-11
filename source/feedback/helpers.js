@@ -10,6 +10,7 @@ function parseSerialize(string) {
   $.each( search, function( index, part ){
     if( part !== '' ){
       part = part.split( '=' );
+      part[ 1 ] = part[ 1 ].replace(/%(?!\d+)/g, '%25');
       if (part[0].indexOf('[]') > -1) {
         var VResult = part[0].match(VRegExp);
         var _key = VResult[0];
@@ -61,7 +62,7 @@ function getPhoneNumberLength(phone) {
   if (!phone) {
     phone = '';
   }else{
-    phone = decodeURIComponent(phone);
+    phone = decodeURIComponent(phone.replace(/%(?!\d+)/g, '%25'));
   }
 
   var VRegExp = new RegExp(/[\d]/g);

@@ -125,10 +125,10 @@ function validatePhone(phone, isRequire, phoneNumberLength, errorMessage) {
   var result = {
     isError: false,
     errorMessage: errorMessage,
-    value: decodeURIComponent(phone)
+    value: decodeURIComponent(phone.replace(/%(?!\d+)/g, '%25'))
   };
 
-  phone = decodeURIComponent(phone)
+  phone = decodeURIComponent(phone.replace(/%(?!\d+)/g, '%25'))
 
   if (!isRequire && phone && phone == '' || !isRequire && !phone) {
     result.value = system.dataDefault.phone;
