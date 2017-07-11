@@ -4,8 +4,9 @@ function eventMachine(name, $target, data) {
   var self = this;
   var _method = getMethodName(name);
   var _event = getEventName(name);
-  var _data = data || {};
+  var _data = {};
   _data.$target = $target;
+  _data[name] = data || {};
 
   // EventBus
   if (typeof EventBus == 'object' && EventBus.publish) {
