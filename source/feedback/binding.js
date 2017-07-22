@@ -36,12 +36,22 @@ function binding() {
 
       var isDone = customValidate($form, dataForm, self);
       if (isDone) {
-        self.sendMessage(dataForm).done(function (onDone) {
-          self.eventMachine('success', $form, onDone);
-          self.eventMachine('after', $form, dataForm);
+        // Системная валидация
+        self.validateFormData(dataForm).done(function (updateFormData) {
+          self.sendMessage(updateFormData).done(function (onDone) {
+            self.eventMachine('success', $form, onDone);
+            self.eventMachine('after', $form, dataForm);
+          })
+          .fail(function (onFail) {
+            var err = getFailerrors(onFail);
+            self.errorRender(err);
+            self.eventMachine('fail', $form, onFail);
+            self.eventMachine('after', $form, dataForm);
+          });
         })
-        .fail(function (onFail) {
-          self.eventMachine('fail', $form, onFail);
+        .fail(function (onErrorData) {
+          self.errorRender(onErrorData);
+          self.eventMachine('error', $form, onErrorData);
           self.eventMachine('after', $form, dataForm);
         });
       }else{
