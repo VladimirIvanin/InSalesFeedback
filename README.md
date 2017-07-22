@@ -3,7 +3,7 @@
 ## CDN
 
 ```html
-  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.15.0/dist/feedback.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.15.1/dist/feedback.js"></script>
 ```
 
 ## Настройки
@@ -69,7 +69,7 @@
   onAfter: function(){}, // после любого действия
   onAgree: function(){}, // Проверка согласия прошла удачно
   onNotagree: function(){}, // Ошибка при проверке согласия
-  customValidate: null, // Своя валидация. Должна возвращать true/false. customValidate($form, dataForm). Синхронная функция.
+  customValidate: null, // Своя валидация. Должна возвращать true/false. customValidate($form, dataForm, this). Синхронная функция.
 }
 ```
 

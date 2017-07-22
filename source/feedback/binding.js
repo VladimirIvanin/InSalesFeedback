@@ -34,7 +34,7 @@ function binding() {
     // если есть кастомная валидация
     if (customValidate && typeof customValidate == 'function') {
 
-      var isDone = customValidate($form, dataForm);
+      var isDone = customValidate($form, dataForm, self);
       if (isDone) {
         self.sendMessage(dataForm).done(function (onDone) {
           self.eventMachine('success', $form, onDone);
