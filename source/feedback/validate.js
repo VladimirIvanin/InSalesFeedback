@@ -223,19 +223,13 @@ function validateContent(content, isRequire, errorMessage) {
     errorMessage: errorMessage,
     value: content
   };
-  if (!content) {
+  var trimContent = content.trim();
+  if (!content || trimContent == '') {
     result.isError = true;
     result.value = '';
   }else{
-    var trimContent = content.trim();
-
     if (!isRequire && content && trimContent == '' || !isRequire && !content) {
       result.value = system.dataDefault.content;
-    }
-    else {
-      if (!content || trimContent == '') {
-        result.isError = true;
-      }
     }
   }
 

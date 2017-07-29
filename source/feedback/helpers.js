@@ -11,17 +11,16 @@ function parseSerialize(string) {
     if( part !== '' ){
       part = part.split( '=' );
       part[ 1 ] = part[ 1 ].replace(/%(?!\d+)/g, '%25');
+      var VResult = part[0].match(VRegExp);
+      var _key = VResult[0];
       if (part[0].indexOf('[]') > -1) {
-        var VResult = part[0].match(VRegExp);
-        var _key = VResult[0];
         if (!_data[ _key ]) {
           _data[ _key ] = [];
         }
         _data[ _key ].push(part[ 1 ]);
       }else{
         if (part[0].indexOf('[') > -1) {
-          var _key = part[0];
-          var VResult = part[0].match(VRegExp);
+          _key = part[0];
           if (!_data[ VResult[0] ]) {
             _data[ VResult[0] ] = [];
           }

@@ -1,7 +1,6 @@
 var parseSerialize = require('./helpers').parseSerialize;
 
 function sendMessage(dataForm) {
-  var self = this;
   var result = $.Deferred();
   var search = parseSerialize(window.location.search);
   var _lang = search.lang || '';

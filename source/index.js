@@ -11,7 +11,6 @@ var checkDuplicateId = require('./feedback/validate').checkDuplicateId;
       var $self = $(this);
       var options = typeof option == 'object' && option;
       var data = $self.data(system.NAME);
-      var isDublicate = checkDuplicateId($self);
 
       if (!data && 'destroy' === option) {
         return;
