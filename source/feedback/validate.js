@@ -122,6 +122,9 @@ function validateFormData(dataForm) {
 
 // Валидация поля phone
 function validatePhone(phone, isRequire, phoneNumberLength, errorMessage) {
+  if (!phone) {
+    phone = ''
+  }
   var result = {
     isError: false,
     errorMessage: errorMessage,
@@ -154,6 +157,9 @@ function validatePhone(phone, isRequire, phoneNumberLength, errorMessage) {
 
 // Валидация поля from
 function validateFrom(from, isRequire, errorMessage) {
+  if (!from) {
+    from = '';
+  }
   var result = {
     isError: false,
     errorMessage: errorMessage,
@@ -178,6 +184,9 @@ function validateFrom(from, isRequire, errorMessage) {
 
 // Валидация поля name
 function validateName(name, isRequire, errorMessage) {
+  if (!name) {
+    name = '';
+  }
   var result = {
     isError: false,
     errorMessage: errorMessage,
@@ -198,6 +207,9 @@ function validateName(name, isRequire, errorMessage) {
 
 // Валидация поля subject
 function validateSubject(subject, isRequire, errorMessage) {
+  if (!subject) {
+    subject = '';
+  }
   var result = {
     isError: false,
     errorMessage: errorMessage,
