@@ -8,6 +8,8 @@ function parseSerialize(string) {
   var search = decodeString.replace( '?', '' ).split( '&' );
   var VRegExp = new RegExp(/(([A-Za-z0-9])+)+/g);
   $.each( search, function( index, part ){
+    part = part.replace(/^feedback\[/g, '');
+    part = part.replace(']=', '=');
     if( part !== '' ){
       part = part.split( '=' );
       part[ 1 ] = part[ 1 ].replace(/%(?!\d+)/g, '%25');
@@ -43,6 +45,7 @@ function parseSerialize(string) {
 
     }
   });
+
   return _data;
 }
 

@@ -9,7 +9,7 @@ function sendMessage(dataForm) {
     feedback: dataForm,
   };
 
-  $.post('/client_account/feedback.json', _message)
+  $.post('/client_account/feedback.json', $.param(_message))
     .done(function (response) {
       if (_message && response.status == 'ok') {
         result.resolve(response);
