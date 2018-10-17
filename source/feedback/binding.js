@@ -39,6 +39,7 @@ function binding() {
         // Системная валидация
         self.validateFormData(dataForm).done(function (updateFormData) {
           self.sendMessage(updateFormData).done(function (onDone) {
+            onDone.formData = dataForm;
             self.eventMachine('success', $form, onDone);
             self.eventMachine('after', $form, dataForm);
           })
@@ -64,6 +65,7 @@ function binding() {
       // Системная валидация
       self.validateFormData(dataForm).done(function (updateFormData) {
         self.sendMessage(updateFormData).done(function (onDone) {
+          onDone.formData = dataForm;
           self.eventMachine('success', $form, onDone);
           self.eventMachine('after', $form, dataForm);
         })

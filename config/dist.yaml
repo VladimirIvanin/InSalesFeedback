@@ -9,7 +9,7 @@ bfPlugins:
       template: "<%= pkg.name %> v<%= pkg.version %>\n<%= pkg.url %>\n<%= pkg.author.name %>\n<%= moment().year() %>"
       pkg:
         name: 'InSalesFeedback'
-        version: '0.15.5'
+        version: '0.15.6'
         url: https://github.com/VladimirIvanin/InSalesFeedback
         author:
           name: 'Vladimir Ivanin'
