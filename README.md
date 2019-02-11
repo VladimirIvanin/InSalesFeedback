@@ -118,6 +118,11 @@ $(document).ready(function() {
 });
 ```
 
+## Атрибуты
+
+data-hide-checkbox-value - скрывает значение чекбокса.
+
+
 ```liquid
 <form class="feedback js-feedback" action="/client_account/feedback" method="post">
 

@@ -1,6 +1,6 @@
 {
   "name": "InSalesFeedback",
-  "version": "0.15.6",
+  "version": "0.15.7",
   "description": "Плагин для отправки сообщений на платформе InSales",
   "main": "dist/feedback.js",
   "scripts": {

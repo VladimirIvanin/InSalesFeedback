@@ -70,7 +70,15 @@ function getProductInfo(product, content) {
 }
 
 function getRow(key, value) {
-  return '<div><strong>'+key+':</strong> '+value+'</div>';
+  return $('<div>').append(
+            $('<div>')
+            .append($('<strong>', {
+              text: (value) ? key+': ' : key
+            }))
+            .append($('<span>', {
+              text: (value) ? value : ''
+            }))
+          ).html();
 }
 
 function getContentHtml(owner, content) {
@@ -94,7 +102,21 @@ function getCustomContent(owner, content) {
     if (value === '') {
       value = 'не заполнено';
     }
-    resultContent += getRow(key, value);
+
+    if ($(el).is('[type="radio"]') || $(el).is('[type="checkbox"]')) {
+      if ($(el).is(':checked')) {
+        value = '✓';
+        // data-hide-key - запишет строку без значения и двоеточия
+        if ($(el).is('[data-hide-checkbox-value]')) {
+          resultContent += getRow(key, false);
+        }else{
+          resultContent += getRow(key, value);
+        }
+      }
+    }else{
+      resultContent += getRow(key, value);
+    }
+
   });
   return resultContent;
 }
