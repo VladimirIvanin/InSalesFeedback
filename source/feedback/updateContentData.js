@@ -105,7 +105,9 @@ function getCustomContent(owner, content) {
 
     if ($(el).is('[type="radio"]') || $(el).is('[type="checkbox"]')) {
       if ($(el).is(':checked')) {
-        value = '✓';
+        if(!$(el).is('[value]')) {
+          value = '✓';
+        }
         // data-hide-key - запишет строку без значения и двоеточия
         if ($(el).is('[data-hide-checkbox-value]')) {
           resultContent += getRow(key, false);
