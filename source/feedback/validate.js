@@ -44,7 +44,12 @@ function validateFormData(dataForm) {
   // phone
   var isPhoneRequire = testRequire('phone', _require);
   var validatePhoneResult = validatePhone(updateFormData.phone, isPhoneRequire, self.options.phoneNumberLength, self.options.errorMessages.phone);
+
   updateFormData.phone = validatePhoneResult.value;
+
+  if (!isPhoneRequire && validatePhoneResult.value === '') {
+    delete updateFormData.phone;
+  }
   if (validatePhoneResult.isError) {
     errors.push({
       name: 'phone',
@@ -56,6 +61,9 @@ function validateFormData(dataForm) {
   var isNameRequire = testRequire('name', _require);
   var validateNameResult = validateName(updateFormData.name, isNameRequire, self.options.errorMessages.name);
   updateFormData.name = validateNameResult.value;
+  if (!isNameRequire && validateNameResult.value === '') {
+    delete updateFormData.name;
+  }
   if (validateNameResult.isError) {
     errors.push({
       name: 'name',

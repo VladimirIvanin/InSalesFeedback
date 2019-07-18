@@ -1,4 +1,5 @@
 var getPageLink = require('./helpers').getPageLink;
+var defaults = require('../variables').defaults;
 
 /**
  * Преобразование контента
@@ -60,10 +61,10 @@ function getProductInfo(product, content) {
   }
   productContent += '</a></div>';
 
-  productContent += getRow('Товар', product.title);
+  productContent += getRow(defaults.messages.product, product.title);
 
   if (product.sku) {
-    productContent += getRow('Артикул', product.sku);
+    productContent += getRow(defaults.messages.sku, product.sku);
   }
 
   return content + productContent;
@@ -100,7 +101,7 @@ function getCustomContent(owner, content) {
       value = $(el).html();
     }
     if (value === '') {
-      value = 'не заполнено';
+      value = defaults.messages.default_value;
     }
 
     if ($(el).is('[type="radio"]') || $(el).is('[type="checkbox"]')) {
@@ -128,7 +129,7 @@ function updateContentTop(content, messageContent) {
   return content + _messageContent;
 }
 function updateContentFooter(content) {
-  var pageLink = '<br /> Отправлено со страницы: ' +  getPageLink();
+  var pageLink = '<br /> '+defaults.messages.send_from+': ' +  getPageLink();
   return content + pageLink;
 }
 
