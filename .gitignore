@@ -2,5 +2,4 @@
 *.log
 /test
 *.zip
-package-lock.json
 npm-debug.log*
