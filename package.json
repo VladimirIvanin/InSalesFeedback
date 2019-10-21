@@ -14,7 +14,7 @@
     "autoprefixer": "^7.1.1",
     "errorify": "^0.3.1",
     "eslintify": "^3.1.0",
-    "isoptera": "0.0.3",
+    "isoptera": "^0.1.0",
     "jstify": "^0.14.0",
     "lodash": "^4.17.4",
     "nocommentify": "0.0.4",
