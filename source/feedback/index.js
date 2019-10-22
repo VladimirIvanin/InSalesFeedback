@@ -42,8 +42,6 @@ Feedback.prototype.initFeedback = function ($elem, options) {
   if (!self.options.useDefaultContent) {
     checkNameContent(self.$element);
   }
-
-  return;
 };
 
 module.exports = Feedback;

@@ -55,7 +55,7 @@ function updateContentData(owner, formContent, isError) {
 }
 
 function getProductInfo(product, content) {
-  var productContent = '<div><a href="'+product.url+'">'
+  var productContent = '<div><a href="'+product.url+'">';
   if (product.first_image) {
     productContent += '<img src="'+product.first_image.medium_url+'" />';
   }

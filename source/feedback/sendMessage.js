@@ -11,7 +11,7 @@ function sendMessage(dataForm) {
 
   $.post('/client_account/feedback.json', $.param(_message))
     .done(function (response) {
-      if (_message && response.status == 'ok') {
+      if (_message && response.status === 'ok') {
         result.resolve(response);
       }
       else {

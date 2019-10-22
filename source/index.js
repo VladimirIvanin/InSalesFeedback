@@ -22,7 +22,7 @@ var checkDuplicateId = require('./feedback/validate').checkDuplicateId;
         data[option]();
       }
     })
-  }
+  };
 
   $.fn.InSalesFeedback.defaults = require('variables').defaults;
 

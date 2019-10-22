@@ -108,7 +108,7 @@ function binding() {
   $(document).on(system.events.success, function(event) {
     var _mainUUID = self.UUID;
     var eventUUID = event.InSalesFeedback.$target[0].InSalesFeedbackUUID;
-    if (_mainUUID == eventUUID) {
+    if (_mainUUID === eventUUID) {
       if (self.options.resetFormOnSubmit) {
         $form.trigger('reset');
       }
@@ -119,7 +119,7 @@ function binding() {
   $(document).on(system.events.notagree, function(event) {
     var _mainUUID = self.UUID;
     var eventUUID = event.InSalesFeedback.$target[0].InSalesFeedbackUUID;
-    if (_mainUUID == eventUUID) {
+    if (_mainUUID === eventUUID) {
       if (options.showMessageAgree) {
         self.errorRender([{
           name: 'agree',
@@ -132,7 +132,7 @@ function binding() {
   });
 
   function triggerSubmit(isActive) {
-    if ($submit.length == 0) {
+    if ($submit.length === 0) {
       console.warn('Отсутствует кнопка отправления формы.');
       $submit = $form.find( '[type="submit"]' );
     }

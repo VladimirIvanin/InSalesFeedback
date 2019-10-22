@@ -90,4 +90,4 @@ var system = {
 module.exports = {
   'defaults': defaults,
   'system': system
-}
+};
