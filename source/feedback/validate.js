@@ -140,7 +140,7 @@ function validatePhone(phone, isRequire, phoneNumberLength, errorMessage) {
   }
   else {
     if (isRequire) {
-      if (!phone || phone === '') {
+      if (!phone) {
         // Если пусто
         result.isError = true;
       }else{
@@ -176,7 +176,7 @@ function validateFrom(from, isRequire, errorMessage) {
     result.value = 'shop@' + _host;
   }
   else {
-    if (!from || from === '' || !emailTest(from)) {
+    if (!from || !emailTest(from)) {
       result.isError = true;
     }
   }
@@ -222,7 +222,7 @@ function validateSubject(subject, isRequire, errorMessage) {
     result.value = system.dataDefault.subject;
   }
   else {
-    if (!subject || subject === '') {
+    if (!subject) {
       result.isError = true;
     }
   }
