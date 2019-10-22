@@ -135,7 +135,7 @@ function validatePhone(phone, isRequire, phoneNumberLength, errorMessage) {
 
   phone = decodeURIComponent(phone.replace(/%(?!\d+)/g, '%25'));
 
-  if (!isRequire && phone && phone === '' || !isRequire && !phone) {
+  if (!isRequire && !phone) {
     result.value = system.dataDefault.phone;
   }
   else {
@@ -168,7 +168,7 @@ function validateFrom(from, isRequire, errorMessage) {
     value: from
   };
 
-  if (!isRequire && from && from === '' || !isRequire && !from) {
+  if (!isRequire && !from) {
     var _host = window.location.host;
     if (_host.indexOf('.') === -1) {
       _host = 'myinsales.ru'
@@ -195,11 +195,11 @@ function validateName(name, isRequire, errorMessage) {
     value: name
   };
 
-  if (!isRequire && name && name === '' || !isRequire && !name) {
+  if (!isRequire && !name) {
     result.value = system.dataDefault.name;
   }
   else {
-    if (!name || name === '') {
+    if (!name) {
       result.isError = true;
     }
   }
@@ -218,7 +218,7 @@ function validateSubject(subject, isRequire, errorMessage) {
     value: subject
   };
 
-  if (!isRequire && subject && subject === '' || !isRequire && !subject) {
+  if (!isRequire && !subject) {
     result.value = system.dataDefault.subject;
   }
   else {
@@ -242,7 +242,7 @@ function validateContent(content, isRequire, errorMessage) {
     result.isError = true;
     result.value = '';
   }else{
-    if (!isRequire && content && trimContent === '' || !isRequire && !content) {
+    if (!isRequire && !content) {
       result.value = system.dataDefault.content;
     }
   }
