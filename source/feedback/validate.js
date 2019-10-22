@@ -133,7 +133,7 @@ function validatePhone(phone, isRequire, phoneNumberLength, errorMessage) {
     value: decodeURIComponent(phone.replace(/%(?!\d+)/g, '%25'))
   };
 
-  phone = decodeURIComponent(phone.replace(/%(?!\d+)/g, '%25'))
+  phone = decodeURIComponent(phone.replace(/%(?!\d+)/g, '%25'));
 
   if (!isRequire && phone && phone === '' || !isRequire && !phone) {
     result.value = system.dataDefault.phone;
