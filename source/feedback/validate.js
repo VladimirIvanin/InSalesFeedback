@@ -242,7 +242,7 @@ function validateContent(content, isRequire, errorMessage) {
     result.isError = true;
     result.value = '';
   }else{
-    if (!isRequire && !content) {
+    if (!isRequire) {
       result.value = system.dataDefault.content;
     }
   }
