@@ -33,6 +33,6 @@ function getMethodName(name) {
 
 var capitalize = function(_string) {
     return _string.charAt(0).toUpperCase() + _string.slice(1);
-}
+};
 
 module.exports = eventMachine;

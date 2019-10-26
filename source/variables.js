@@ -56,7 +56,7 @@ var defaults = {
     error: 'data-feedback-error', // поле для вывода ошибки (общее)
     errors: 'data-feedback-errors' // поле для вывода ошибок
   }
-}
+};
 
 var system = {
   NAME: 'InSalesFeedback',
@@ -85,9 +85,9 @@ var system = {
     notagree: 'notagree::feedback', // Ошибка при проверке согласия
     error: 'error::feedback' // Ошибка валидации
   }
-}
+};
 
 module.exports = {
   'defaults': defaults,
   'system': system
-}
+};

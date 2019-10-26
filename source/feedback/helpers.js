@@ -1,6 +1,6 @@
 // преобразовать строку в объект
 function parseSerialize(string) {
-  if (string == "") {
+  if (string === "") {
     return {};
   }
   var _data = {};
@@ -88,11 +88,10 @@ function generateUUID() {
   var uuid = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = (d + Math.random()*16)%16 | 0;
     d = Math.floor(d/16);
-    return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    return (c==='x' ? r : (r&0x3|0x8)).toString(16);
   });
   return uuid;
-};
-
+}
 // получить ошибки из ответа сервера
 function getFailerrors(fail) {
   var result = [];
@@ -122,4 +121,4 @@ module.exports = {
   'getPhoneNumberLength': getPhoneNumberLength,
   'getDataAttrName': getDataAttrName,
   'getPageLink': getPageLink
-}
+};

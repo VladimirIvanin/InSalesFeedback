@@ -45,7 +45,7 @@ function errorRender(errors) {
   });
 
   $.each(system.names, function(index, system_name) {
-    if (errorsNames.indexOf(system_name) == -1) {
+    if (errorsNames.indexOf(system_name) === -1) {
       var $input = self.$element.find('[name="'+system_name+'"]');
       var $field = $input.parents( fieldSelector );
       var $inputErrorSelector = $field.find( inputErrorSelector );

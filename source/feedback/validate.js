@@ -39,8 +39,7 @@ function validateFormData(dataForm) {
       name: 'from',
       errorMessage: validateFromResult.errorMessage
     })
-  };
-
+  }
   // phone
   var isPhoneRequire = testRequire('phone', _require);
   var validatePhoneResult = validatePhone(updateFormData.phone, isPhoneRequire, self.options.phoneNumberLength, self.options.errorMessages.phone);
@@ -55,8 +54,7 @@ function validateFormData(dataForm) {
       name: 'phone',
       errorMessage: validatePhoneResult.errorMessage
     })
-  };
-
+  }
   // name
   var isNameRequire = testRequire('name', _require);
   var validateNameResult = validateName(updateFormData.name, isNameRequire, self.options.errorMessages.name);
@@ -69,8 +67,7 @@ function validateFormData(dataForm) {
       name: 'name',
       errorMessage: validateNameResult.errorMessage
     })
-  };
-
+  }
   // subject
   var isSubjectRequire = testRequire('subject', _require);
   var validateSubjectResult = validateSubject(updateFormData.subject, isSubjectRequire, self.options.errorMessages.subject);
@@ -80,8 +77,7 @@ function validateFormData(dataForm) {
       name: 'subject',
       errorMessage: validateSubjectResult.errorMessage
     })
-  };
-
+  }
   // content
   if (!self.options.useDefaultContent && !updateFormData.content) {
 
@@ -93,8 +89,7 @@ function validateFormData(dataForm) {
         name: 'content',
         errorMessage: validateContentResult.errorMessage
       });
-    };
-
+    }
     if (errors.length > 0) {
       result.reject(errors);
     }
@@ -113,8 +108,7 @@ function validateFormData(dataForm) {
         name: 'content',
         errorMessage: validateContentResult.errorMessage
       });
-    };
-
+    }
     if (errors.length > 0) {
       result.reject(errors);
     }
@@ -139,14 +133,14 @@ function validatePhone(phone, isRequire, phoneNumberLength, errorMessage) {
     value: decodeURIComponent(phone.replace(/%(?!\d+)/g, '%25'))
   };
 
-  phone = decodeURIComponent(phone.replace(/%(?!\d+)/g, '%25'))
+  phone = decodeURIComponent(phone.replace(/%(?!\d+)/g, '%25'));
 
-  if (!isRequire && phone && phone == '' || !isRequire && !phone) {
+  if (!isRequire && !phone) {
     result.value = system.dataDefault.phone;
   }
   else {
     if (isRequire) {
-      if (!phone || phone == '') {
+      if (!phone) {
         // Если пусто
         result.isError = true;
       }else{
@@ -174,15 +168,15 @@ function validateFrom(from, isRequire, errorMessage) {
     value: from
   };
 
-  if (!isRequire && from && from == '' || !isRequire && !from) {
+  if (!isRequire && !from) {
     var _host = window.location.host;
-    if (_host.indexOf('.') == -1) {
+    if (_host.indexOf('.') === -1) {
       _host = 'myinsales.ru'
     }
     result.value = 'shop@' + _host;
   }
   else {
-    if (!from || from == '' || !emailTest(from)) {
+    if (!from || !emailTest(from)) {
       result.isError = true;
     }
   }
@@ -201,11 +195,11 @@ function validateName(name, isRequire, errorMessage) {
     value: name
   };
 
-  if (!isRequire && name && name == '' || !isRequire && !name) {
+  if (!isRequire && !name) {
     result.value = system.dataDefault.name;
   }
   else {
-    if (!name || name == '') {
+    if (!name) {
       result.isError = true;
     }
   }
@@ -224,11 +218,11 @@ function validateSubject(subject, isRequire, errorMessage) {
     value: subject
   };
 
-  if (!isRequire && subject && subject == '' || !isRequire && !subject) {
+  if (!isRequire && !subject) {
     result.value = system.dataDefault.subject;
   }
   else {
-    if (!subject || subject == '') {
+    if (!subject) {
       result.isError = true;
     }
   }
@@ -244,11 +238,11 @@ function validateContent(content, isRequire, errorMessage) {
     value: content
   };
   var trimContent = content.trim();
-  if (!content || trimContent == '') {
+  if (!content || trimContent === '') {
     result.isError = true;
     result.value = '';
   }else{
-    if (!isRequire && content && trimContent == '' || !isRequire && !content) {
+    if (!isRequire) {
       result.value = system.dataDefault.content;
     }
   }
@@ -258,7 +252,7 @@ function validateContent(content, isRequire, errorMessage) {
 
 function checkNameContent($form) {
   var $content = $form.find('[name="content"]');
-  if ($content.length == 0) {
+  if ($content.length === 0) {
     console.warn('В форме отсутствует поле content', $form);
   }
 }
@@ -268,11 +262,11 @@ function checkAgree($form, agreeSelector, useAgree, errorMessages) {
 
   if (useAgree) {
     var $agreeSelector = $form.find('['+agreeSelector+']');
-    if ($agreeSelector.length == 0 || !$agreeSelector.prop('checked')) {
+    if ($agreeSelector.length === 0 || !$agreeSelector.prop('checked')) {
       confirm = false
     }
 
-    if ($agreeSelector.length == 0) {
+    if ($agreeSelector.length === 0) {
       console.warn('Отсутствует чекбокс согласия на обработку персональных данных');
     }
   }
@@ -286,4 +280,4 @@ module.exports = {
   'checkAgree': checkAgree,
   'checkNameContent': checkNameContent,
   'validateFormData': validateFormData
-}
+};
