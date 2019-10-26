@@ -189,6 +189,12 @@ data-hide-checkbox-value - скрывает значение чекбокса.
 </form>
 ```
 
+## Для разработчиков
+Для сборки проекта требуется следующее программное обеспечение:
+
+- [Node и npm](https://nodejs.org/en/)
+- [Python](https://www.python.org/downloads/)
+
 ## Плагины для InSales
 
 - [Избранное](https://github.com/VladimirIvanin/favorites)
