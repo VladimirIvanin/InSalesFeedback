@@ -88,6 +88,10 @@
   },
   // фразы блоков data-feedback-success/data-feedback-error
   messages: {
+    send_from: 'Отправлено со страницы',
+    product: 'Продукт',
+    sku: 'Артикул',
+    default_value: 'Не заполнено',
     success: 'Сообщение успешно отправлено!',
     fail: 'Сообщение не отправлено, попробуйте ещё раз!',
     error: 'Неверно заполнены поля!'
