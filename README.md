@@ -3,7 +3,7 @@
 ## CDN
 
 ```html
-  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.15.8/dist/feedback.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/VladimirIvanin/InSalesFeedback@0.15.9/dist/feedback.js"></script>
 ```
 
 ## Настройки
