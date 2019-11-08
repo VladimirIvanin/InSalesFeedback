@@ -3,6 +3,7 @@ var updateContentData = require('./updateContentData');
 var testRequire = require('./helpers').testRequire;
 var emailTest = require('./helpers').emailTest;
 var getPhoneNumberLength = require('./helpers').getPhoneNumberLength;
+var punycode = require('punycode');
 
 function checkDuplicateId($element) {
   var error = false;
@@ -173,7 +174,7 @@ function validateFrom(from, isRequire, errorMessage) {
     if (_host.indexOf('.') === -1) {
       _host = 'myinsales.ru'
     }
-    result.value = 'shop@' + _host;
+    result.value = 'shop@' + punycode.toUnicode(_host);
   }
   else {
     if (!from || !emailTest(from)) {
