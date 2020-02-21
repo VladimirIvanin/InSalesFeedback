@@ -3,6 +3,7 @@ var updateContentData = require('./updateContentData');
 var testRequire = require('./helpers').testRequire;
 var emailTest = require('./helpers').emailTest;
 var getPhoneNumberLength = require('./helpers').getPhoneNumberLength;
+var punycode = require('punycode');
 
 function checkDuplicateId($element) {
   var error = false;
