@@ -168,7 +168,7 @@ function validateFrom(from, isRequire, errorMessage) {
   };
 
   if (!isRequire && from && from == '' || !isRequire && !from) {
-    var _host = window.location.host;
+    var _host = window.location.host.replace(/^www\./g, '');
     if (_host.indexOf('.') == -1) {
       _host = 'myinsales.ru'
     }
