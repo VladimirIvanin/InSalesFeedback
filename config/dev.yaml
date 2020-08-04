@@ -23,7 +23,6 @@ bfTransforms:
   - name: jstify
     options:
       engine: global
-  - name: nocommentify
 
 proxy:
   https: false
