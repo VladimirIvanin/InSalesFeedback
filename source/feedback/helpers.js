@@ -97,9 +97,10 @@ function getFailerrors(fail) {
   var result = [];
   if (fail.errors) {
     $.each(fail.errors, function(index, el) {
+      var textError = (typeof el == 'string') ? el : el[0];
       result.push({
         name: index,
-        errorMessage: el[0] || ''
+        errorMessage: textError || ''
       })
     });
   }

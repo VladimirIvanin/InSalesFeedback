@@ -5,8 +5,9 @@ function sendMessage(dataForm) {
   var search = parseSerialize(window.location.search);
   var _lang = search.lang || '';
   var _message = {
-    lang: _lang,
-    feedback: dataForm,
+    'lang': _lang,
+    'feedback': dataForm,
+    'g-recaptcha-response': dataForm['g-recaptcha-response']
   };
 
   $.post('/client_account/feedback.json', $.param(_message))

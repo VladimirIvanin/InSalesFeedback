@@ -29,6 +29,10 @@ function validateFormData(dataForm) {
   var result = $.Deferred();
   var errors = [];
   var _require = self.options.require;
+  if (Shop.config.config.feedback_captcha_enabled || Shop.config.theme_settings.feedback_captcha_enabled) {
+    _require.push('g-recaptcha-response')
+  }
+
   var updateFormData = dataForm;
 
   // from (e-mail)
@@ -71,6 +75,17 @@ function validateFormData(dataForm) {
   if (validateSubjectResult.isError) {
     errors.push({
       name: 'subject',
+      errorMessage: validateSubjectResult.errorMessage
+    })
+  };
+
+  // g-recaptcha-response
+  var isSubjectRequire = testRequire('g-recaptcha-response', _require);
+  var validateSubjectResult = validateSubject(updateFormData.subject, isSubjectRequire, self.options.errorMessages.subject);
+  updateFormData.subject = validateSubjectResult.value;
+  if (validateSubjectResult.isError) {
+    errors.push({
+      name: 'g-recaptcha-response',
       errorMessage: validateSubjectResult.errorMessage
     })
   };

@@ -63,11 +63,12 @@ var system = {
   VERSION: '0.14.2',
   NAMESPACE: '.InSalesFeedback',
   names: {
-    from: 'from', // адрес отправителя
-    name: 'name', // имя отправителя
-    phone: 'phone', // телефон отправителя
-    subject: 'subject', // тема сообщения
-    content: 'content' // тело сообщения (обязательное)
+    "from": 'from', // адрес отправителя
+    "name": 'name', // имя отправителя
+    "phone": 'phone', // телефон отправителя
+    "subject": 'subject', // тема сообщения
+    "g-recaptcha-response": 'g-recaptcha-response', // рекаптча
+    "content": 'content' // тело сообщения (обязательное)
   },
   dataDefault: {
     from: 'shop@myinsales.ru', // адрес отправителя
