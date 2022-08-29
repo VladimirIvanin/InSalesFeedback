@@ -97,7 +97,14 @@ function getCustomContent(owner, content) {
   $customContent.each(function(index, el) {
     var key = $(el).data( owner.options.selectors.customContent.replace('data-', '') );
     var value = $(el).val();
-    if (!value) {
+    var valueTypes = ['select', '[type="text"]', 'textarea', 'input'];
+    var isValueType = false;
+    $.each(valueTypes, function (index, types) {
+      if ($(el).is(types)) {
+        isValueType = true;
+      }
+    })
+    if (!value && !isValueType) {
       value = $(el).html();
     }
     if (value === '') {
