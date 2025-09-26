@@ -9,7 +9,8 @@ function sendMessage(dataForm) {
     'feedback': dataForm
   };
 
-  if (Shop.config.config.captcha_type === 'google') {
+  if (Shop && Shop.config && Shop.config.config && 
+      Shop.config.config.captcha_type === 'google') {
     _message['g-recaptcha-response'] = dataForm['g-recaptcha-response'];
   }
 
