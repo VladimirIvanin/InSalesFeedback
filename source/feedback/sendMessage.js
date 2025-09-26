@@ -6,9 +6,12 @@ function sendMessage(dataForm) {
   var _lang = search.lang || '';
   var _message = {
     'lang': _lang,
-    'feedback': dataForm,
-    'g-recaptcha-response': dataForm['g-recaptcha-response']
+    'feedback': dataForm
   };
+
+  if (Shop.config.config.captcha_type === 'google') {
+    _message['g-recaptcha-response'] = dataForm['g-recaptcha-response'];
+  }
 
   $.post('/client_account/feedback.json', $.param(_message))
     .done(function (response) {
