@@ -1,5 +1,5 @@
 /*!
- * InSalesFeedback v0.16.2
+ * InSalesFeedback v0.17.0
  * https://github.com/VladimirIvanin/InSalesFeedback
  * Vladimir Ivanin
  * 2025
